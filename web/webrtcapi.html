@@ -1,0 +1,792 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="WebRTC webcam demo with recording and voice chat controls." />
+    <title>WebRTC Webcam</title>
+    <style>
+        :root {
+            color-scheme: light;
+            --bg-overlay: rgba(8, 12, 20, 0.55);
+            --card-bg: rgba(255, 255, 255, 0.92);
+            --card-border: rgba(0, 0, 0, 0.08);
+            --text: #0f172a;
+            --muted: #64748b;
+            --shadow: 0 10px 30px rgba(0, 0, 0, 0.18);
+            --radius: 16px;
+            --radius-sm: 12px;
+            --focus: 0 0 0 3px rgba(59, 130, 246, 0.35);
+            --primary: #2563eb;
+            --primary-hover: #1d4ed8;
+            --danger: #dc2626;
+            --danger-hover: #b91c1c;
+            --success: #16a34a;
+            --success-hover: #15803d;
+            --gray: #475569;
+        }
+
+        * { box-sizing: border-box; }
+
+        body {
+            background-image: url('./images/backimage.gif');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center center;
+            background-attachment: fixed;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+            margin: 0;
+            color: var(--text);
+        }
+    
+        body::before {
+            content: "";
+            position: fixed;
+            inset: 0;
+            background: var(--bg-overlay);
+            pointer-events: none;
+        }
+
+        main {
+            position: relative;
+            padding: 24px 16px 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .page-header {
+            background: rgba(255, 255, 255, 0.12);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            border-radius: var(--radius);
+            padding: 16px 18px;
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            color: rgba(255, 255, 255, 0.95);
+            box-shadow: 0 8px 26px rgba(0, 0, 0, 0.25);
+            margin-bottom: 16px;
+        }
+
+        .page-header h1 {
+            font-size: 18px;
+            margin: 0 0 6px;
+            letter-spacing: 0.2px;
+            font-weight: 700;
+        }
+
+        .page-header p {
+            margin: 0;
+            color: rgba(255, 255, 255, 0.85);
+            font-size: 13px;
+            line-height: 1.4;
+        }
+
+        .layout {
+            display: grid;
+            grid-template-columns: 420px 1fr;
+            gap: 16px;
+            align-items: start;
+        }
+
+        @media (max-width: 980px) {
+            .layout {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .card {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            overflow: hidden;
+        }
+
+        .card + .card { margin-top: 12px; }
+
+        .card-header {
+            padding: 12px 14px;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+        }
+
+        .card-title {
+            margin: 0;
+            font-size: 14px;
+            font-weight: 700;
+            letter-spacing: 0.2px;
+        }
+
+        .card-subtitle {
+            margin: 0;
+            font-size: 12px;
+            color: var(--muted);
+            line-height: 1.35;
+            padding: 0 14px 12px;
+        }
+
+        .card-body {
+            padding: 12px 14px 14px;
+        }
+
+        .option {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+            margin-bottom: 10px;
+            flex-wrap: wrap;
+        }
+
+        .option label {
+            font-size: 13px;
+            color: var(--gray);
+            font-weight: 600;
+        }
+
+        .switch {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .switch input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            accent-color: var(--primary);
+        }
+
+        .controls-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .help {
+            font-size: 12px;
+            color: var(--muted);
+            margin: 8px 0 0;
+            line-height: 1.4;
+        }
+
+        button,
+        .btn {
+            padding: 10px 12px;
+            border-radius: 12px;
+            border: 1px solid rgba(0, 0, 0, 0.10);
+            background: #fff;
+            color: var(--text);
+            font-weight: 700;
+            font-size: 13px;
+            cursor: pointer;
+            transition: transform 0.08s ease, box-shadow 0.15s ease, background 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+            user-select: none;
+        }
+
+        button:hover:not(:disabled) {
+            transform: translateY(-1px);
+            box-shadow: 0 10px 18px rgba(0, 0, 0, 0.12);
+            border-color: rgba(0, 0, 0, 0.16);
+        }
+
+        button:active:not(:disabled) {
+            transform: translateY(0);
+            box-shadow: none;
+        }
+
+        button:disabled {
+            opacity: 0.55;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        button:focus-visible {
+            outline: none;
+            box-shadow: var(--focus);
+        }
+
+        .btn-primary,
+        #start {
+            background: var(--primary);
+            color: #fff;
+            border-color: rgba(37, 99, 235, 0.4);
+        }
+
+        .btn-primary:hover:not(:disabled),
+        #start:hover:not(:disabled) {
+            background: var(--primary-hover);
+        }
+
+        #stop {
+            background: var(--danger);
+            color: #fff;
+            border-color: rgba(220, 38, 38, 0.4);
+        }
+
+        #stop:hover:not(:disabled) {
+            background: var(--danger-hover);
+        }
+
+        #btn_start_record {
+            background: var(--success);
+            color: #fff;
+            border-color: rgba(22, 163, 74, 0.4);
+        }
+
+        #btn_start_record:hover:not(:disabled) {
+            background: var(--success-hover);
+        }
+
+        #btn_stop_record {
+            background: #fff;
+            color: var(--danger);
+            border-color: rgba(220, 38, 38, 0.35);
+        }
+
+        #btn_stop_record:hover:not(:disabled) {
+            background: rgba(220, 38, 38, 0.08);
+        }
+
+        input[type="text"],
+        textarea {
+            border: 1px solid rgba(0, 0, 0, 0.12);
+            border-radius: 12px;
+            padding: 10px 12px;
+            font-size: 13px;
+            width: min(100%, 680px);
+            background: #fff;
+            color: var(--text);
+            outline: none;
+            transition: box-shadow 0.15s ease, border-color 0.15s ease;
+        }
+
+        input[type="text"]:focus,
+        textarea:focus {
+            border-color: rgba(37, 99, 235, 0.55);
+            box-shadow: var(--focus);
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 64px;
+            line-height: 1.35;
+        }
+
+        /* Media */
+        #media {
+            max-width: 1280px;
+        }
+
+        #media .card-body {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 12px;
+        }
+
+        audio {
+            width: 100%;
+        }
+
+        video {
+            width: 100%;
+            aspect-ratio: 16 / 9;
+            background: #0b1220;
+            border-radius: 14px;
+            border: 1px solid rgba(255, 255, 255, 0.10);
+            box-shadow: 0 10px 26px rgba(0, 0, 0, 0.22);
+        }
+
+        /* 【Zegao】Voice chat section styles */
+        .voice-section {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin: 0;
+            padding: 0;
+            background: transparent;
+            border-radius: 0;
+            box-shadow: none;
+            min-width: unset;
+        }
+
+        .voice-section h3 {
+            margin: 0;
+            font-size: 13px;
+            color: var(--gray);
+            letter-spacing: 0.2px;
+        }
+
+        #btn_voice {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 28px;
+            font-size: 16px;
+            font-weight: 600;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: background 0.25s, transform 0.15s, box-shadow 0.25s;
+            outline: none;
+            min-width: 180px;
+            justify-content: center;
+            background: var(--success);
+            color: #fff;
+            box-shadow: 0 8px 18px rgba(22, 163, 74, 0.35);
+        }
+
+        #btn_voice:hover:not(:disabled) {
+            background: var(--success-hover);
+            transform: translateY(-1px);
+            box-shadow: 0 10px 22px rgba(22, 163, 74, 0.45);
+        }
+
+        #btn_voice.recording {
+            background: var(--danger);
+            box-shadow: 0 8px 18px rgba(220, 38, 38, 0.40);
+            animation: voice-pulse 1.2s ease-in-out infinite;
+        }
+
+        #btn_voice:disabled {
+            background: #9E9E9E;
+            cursor: not-allowed;
+            box-shadow: none;
+            transform: none;
+        }
+
+        @keyframes voice-pulse {
+            0%   { transform: scale(1); }
+            50%  { transform: scale(1.04); }
+            100% { transform: scale(1); }
+        }
+
+        #voice-status {
+            font-size: 13px;
+            color: var(--muted);
+            min-height: 18px;
+            text-align: left;
+            padding: 10px 12px;
+            border-radius: 12px;
+            background: rgba(37, 99, 235, 0.08);
+            border: 1px solid rgba(37, 99, 235, 0.16);
+        }
+
+        #voice-recognized {
+            font-size: 13px;
+            color: #1565C0;
+            max-width: 100%;
+            text-align: left;
+            word-break: break-word;
+            min-height: 18px;
+            padding: 10px 12px;
+            border-radius: 12px;
+            background: rgba(22, 163, 74, 0.08);
+            border: 1px solid rgba(22, 163, 74, 0.18);
+        }
+    </style>
+    
+</head>
+<body>
+
+<main>
+    <header class="page-header">
+        <h1>WebRTC Control Panel</h1>
+        <p>
+            Start the WebRTC session first, then use Recording and Voice Chat as needed.
+            Voice Chat will automatically wait until the avatar finishes speaking before re-enabling the button.
+        </p>
+    </header>
+
+    <div class="layout">
+        <div>
+            <section class="card" aria-label="Connection and session">
+                <div class="card-header">
+                    <h2 class="card-title">Session</h2>
+                </div>
+                <div class="card-body">
+                    <div class="option">
+                        <span class="switch">
+                            <input id="use-stun" type="checkbox" />
+                            <label for="use-stun">Use STUN server</label>
+                        </span>
+                    </div>
+
+                    <div class="option">
+                        <label for="sessionid">Session ID</label>
+                        <input type="text" id="sessionid" value="0" readonly inputmode="numeric" aria-readonly="true" />
+                    </div>
+
+                    <div class="controls-row" role="group" aria-label="WebRTC controls">
+                        <button id="start" type="button" onclick="start()">Start WebRTC</button>
+                        <button id="stop" type="button" style="display: none" onclick="stop()">Stop WebRTC</button>
+                    </div>
+
+                    <div class="controls-row" role="group" aria-label="Recording controls">
+                        <button class="btn btn-primary" id="btn_start_record" type="button">Start Recording</button>
+                        <button class="btn btn-primary" id="btn_stop_record" type="button" disabled>Stop Recording</button>
+                    </div>
+
+                    <p class="help">
+                        Tip: If the camera/microphone prompt does not appear, check browser permissions for this site.
+                    </p>
+                </div>
+            </section>
+
+            <!-- 【Zegao】Voice chat section -->
+            <section class="card" aria-label="Voice chat">
+                <div class="card-header">
+                    <h2 class="card-title">Voice Chat (English)</h2>
+                </div>
+                <p class="card-subtitle">
+                    Click to record your voice. When you stop, the audio is sent to the server for transcription and reply generation.
+                </p>
+                <div class="card-body">
+                    <div class="voice-section">
+                        <button id="btn_voice" type="button" aria-describedby="voice-status voice-recognized">Start speaking</button>
+                        <div id="voice-status" role="status" aria-live="polite">Ready.</div>
+                        <div id="voice-recognized" aria-live="polite">Recognized text will appear here.</div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="card" aria-label="Text input">
+                <div class="card-header">
+                    <h2 class="card-title">Text Message</h2>
+                </div>
+                <p class="card-subtitle">
+                    Send a text message to the server endpoint. This does not affect the Voice Chat workflow.
+                </p>
+                <div class="card-body">
+                    <form class="form-inline" id="echo-form">
+                        <div class="form-group">
+                            <label for="message" style="display:block; font-size:13px; color: var(--gray); font-weight: 700; margin-bottom: 8px;">Message</label>
+                            <textarea cols="2" rows="3" style="width:100%;height:auto;" class="form-control" id="message" aria-label="Message">test</textarea>
+                        </div>
+                        <div class="controls-row" style="margin-top: 10px;">
+                            <button type="submit" class="btn btn-default">Send</button>
+                        </div>
+                        <p class="help">After sending, the input will be cleared automatically.</p>
+                    </form>
+                </div>
+            </section>
+        </div>
+
+        <section id="media" class="card" aria-label="Media preview">
+            <div class="card-header">
+                <h2 class="card-title">Media Preview</h2>
+            </div>
+            <p class="card-subtitle">
+                The audio and video streams will appear here once the WebRTC session is started.
+            </p>
+            <div class="card-body">
+                <audio id="audio" autoplay="true"></audio>
+                <video id="video" style="width:100%;" autoplay="true" playsinline="true"></video>
+            </div>
+        </section>
+    </div>
+</main>
+
+<script src="client.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sockjs-client@1.6.1/dist/sockjs.min.js"></script>
+<script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+<script type="text/javascript" charset="utf-8">
+
+	$(document).ready(function() {
+	  // var host = window.location.hostname
+	  // var ws = new WebSocket("ws://"+host+":8000/humanecho");
+	  // //document.getElementsByTagName("video")[0].setAttribute("src", aa["video"]);
+	  // ws.onopen = function() {
+		// console.log('Connected');
+	  // };
+	  // ws.onmessage = function(e) {
+		// console.log('Received: ' + e.data);
+		// data = e
+		// var vid = JSON.parse(data.data); 
+		// console.log(typeof(vid),vid)
+		// //document.getElementsByTagName("video")[0].setAttribute("src", vid["video"]);
+		
+	  // };
+	  // ws.onclose = function(e) {
+		// console.log('Closed');
+	  // };
+
+	  $('#echo-form').on('submit', function(e) {
+      e.preventDefault();
+      var message = $('#message').val();
+      console.log('Sending: ' + message);
+      console.log('sessionid: ',document.getElementById('sessionid').value);
+      fetch('/human', {
+            body: JSON.stringify({
+                text: message,
+                type: 'echo',
+                interrupt: true,
+                sessionid:parseInt(document.getElementById('sessionid').value),
+            }),
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            method: 'POST'
+      });
+      //ws.send(message);
+      $('#message').val('');
+	  });
+
+    $('#btn_start_record').click(function() {
+        // 【Zegao】Start recording
+        console.log('Starting recording...');
+        fetch('/record', {
+            body: JSON.stringify({
+                    type: 'start_record',
+                    sessionid:parseInt(document.getElementById('sessionid').value),
+                }),
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+            method: 'POST'
+        }).then(function(response) {
+            if (response.ok) {
+                console.log('Recording started.');
+                $('#btn_start_record').prop('disabled', true);
+                $('#btn_stop_record').prop('disabled', false);
+                // $('#btn_download').prop('disabled', true);
+            } else {
+                console.error('Failed to start recording.');
+            }
+        }).catch(function(error) {
+            console.error('Error:', error);
+        });
+    });
+
+    $('#btn_stop_record').click(function() {
+        // 【Zegao】Stop recording
+        console.log('Stopping recording...');
+        fetch('/record', {
+            body: JSON.stringify({
+                    type: 'end_record',
+                    sessionid:parseInt(document.getElementById('sessionid').value),
+                }),
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+            method: 'POST'
+        }).then(function(response) {
+            if (response.ok) {
+                console.log('Recording stopped.');
+                $('#btn_start_record').prop('disabled', false);
+                $('#btn_stop_record').prop('disabled', true);
+                // $('#btn_download').prop('disabled', false);
+            } else {
+                console.error('Failed to stop recording.');
+            }
+        }).catch(function(error) {
+            console.error('Error:', error);
+        });
+    });
+
+    // $('#btn_download').click(function() {
+    //     // 【Zegao】Download recorded video
+    //     console.log('Downloading video...');
+    //     fetch('/record_lasted.mp4', {
+    //         method: 'GET'
+    //     }).then(function(response) {
+    //         if (response.ok) {
+    //             return response.blob();
+    //         } else {
+    //             throw new Error('Failed to download the video.');
+    //         }
+    //     }).then(function(blob) {
+    //         // 【Zegao】Create a Blob object
+    //         const url = window.URL.createObjectURL(blob);
+    //         // 【Zegao】Create a hidden downloadable link
+    //         const a = document.createElement('a');
+    //         a.style.display = 'none';
+    //         a.href = url;
+    //         a.download = 'record_lasted.mp4';
+    //         document.body.appendChild(a);
+    //         // 【Zegao】Trigger download
+    //         a.click();
+    //         // 【Zegao】Cleanup
+    //         window.URL.revokeObjectURL(url);
+    //         document.body.removeChild(a);
+    //         console.log('Video downloaded successfully.');
+    //     }).catch(function(error) {
+    //         console.error('Error:', error);
+    //     });
+    // });
+
+	});
+
+    // ─────────────────────────────────────────────────────────────
+    // 【Zegao】Voice chat: button state machine + is_speaking polling
+    // States: idle → recording → processing → waiting → idle
+    // ─────────────────────────────────────────────────────────────
+    (function () {
+        const voiceBtn       = document.getElementById('btn_voice');
+        const voiceStatus    = document.getElementById('voice-status');
+        const voiceRecognized = document.getElementById('voice-recognized');
+
+        let mediaRecorder  = null;
+        let audioChunks    = [];
+        let voiceState     = 'idle'; // idle | recording | processing | waiting
+
+        const STATE_CONFIG = {
+            idle: {
+                label:    'Start speaking',
+                status:   '',
+                disabled: false,
+                cls:      '',
+            },
+            recording: {
+                label:    'Stop recording',
+                status:   'Recording... Please speak in English.',
+                disabled: false,
+                cls:      'recording',
+            },
+            processing: {
+                label:    'Processing...',
+                status:   'Transcribing and generating a reply. Please wait...',
+                disabled: true,
+                cls:      '',
+            },
+            waiting: {
+                label:    'Speaking...',
+                status:   'Waiting for the avatar to finish speaking. The button will reset automatically.',
+                disabled: true,
+                cls:      '',
+            },
+        };
+
+        function applyState(state) {
+            voiceState = state;
+            const cfg = STATE_CONFIG[state];
+            voiceBtn.textContent    = cfg.label;
+            voiceBtn.disabled       = cfg.disabled;
+            voiceBtn.className      = cfg.cls;
+            voiceStatus.textContent = cfg.status;
+        }
+
+        voiceBtn.addEventListener('click', async () => {
+            if (voiceState === 'idle') {
+                await startRecording();
+            } else if (voiceState === 'recording') {
+                stopRecording();
+            }
+        });
+
+        async function startRecording() {
+            try {
+                const stream = await navigator.mediaDevices.getUserMedia({ audio: true, video: false });
+                audioChunks  = [];
+
+                // 【Zegao】Prefer the best format supported by the browser
+                const mimeType = MediaRecorder.isTypeSupported('audio/webm;codecs=opus')
+                    ? 'audio/webm;codecs=opus'
+                    : 'audio/webm';
+
+                mediaRecorder = new MediaRecorder(stream, { mimeType });
+
+                mediaRecorder.ondataavailable = (e) => {
+                    if (e.data.size > 0) audioChunks.push(e.data);
+                };
+
+                mediaRecorder.onstop = async () => {
+                    // 【Zegao】Release the microphone immediately
+                    stream.getTracks().forEach((t) => t.stop());
+                    applyState('processing');
+                    voiceRecognized.textContent = '';
+                    const audioBlob = new Blob(audioChunks, { type: mimeType });
+                    await sendVoiceToServer(audioBlob);
+                };
+
+                mediaRecorder.start();
+                applyState('recording');
+            } catch (err) {
+                console.error('[VoiceChat] Microphone access denied:', err);
+                alert('Unable to access the microphone. Please allow microphone permission in your browser and try again.');
+                applyState('idle');
+            }
+        }
+
+        function stopRecording() {
+            if (mediaRecorder && mediaRecorder.state !== 'inactive') {
+                mediaRecorder.stop();
+            }
+        }
+
+        async function sendVoiceToServer(audioBlob) {
+            const sessionid = parseInt(document.getElementById('sessionid').value || '0');
+            const formData  = new FormData();
+            formData.append('audio', audioBlob, 'voice.webm');
+            formData.append('sessionid', String(sessionid));
+
+            try {
+                const response = await fetch('/voice_chat', {
+                    method: 'POST',
+                    body:   formData,
+                });
+                const data = await response.json();
+
+                if (data.code === 0) {
+                    console.log('[VoiceChat] Recognized:', data.text);
+                    voiceRecognized.textContent = `"${data.text}"`;
+                    applyState('waiting');
+                    // 【Zegao】Give nerfreal a moment to start before polling
+                    setTimeout(() => pollIsSpeaking(sessionid, 0), 1500);
+                } else {
+                    console.error('[VoiceChat] Error:', data.msg);
+                    voiceStatus.textContent = `⚠ ${data.msg}`;
+                    setTimeout(() => applyState('idle'), 3000);
+                }
+            } catch (err) {
+                console.error('[VoiceChat] Network error:', err);
+                voiceStatus.textContent = '⚠ Network error. Please try again.';
+                setTimeout(() => applyState('idle'), 3000);
+            }
+        }
+
+        /**
+         * 【Zegao】Polling `/is_speaking`:
+         * - Wait up to 20 polls (10s) for the avatar to start speaking
+         * - Once `is_speaking=true` is observed, wait until it turns false to restore the button
+         */
+        function pollIsSpeaking(sessionid, pollCount) {
+            const MAX_WAIT_WITHOUT_SPEAKING = 20; // 20 × 500ms = 10s
+
+            fetch('/is_speaking', {
+                method:  'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body:    JSON.stringify({ sessionid }),
+            })
+            .then((r) => r.json())
+            .then((data) => {
+                const isSpeaking = data.data === true || data.data === 1;
+
+                if (isSpeaking) {
+                    // 【Zegao】Avatar is speaking, keep waiting
+                    setTimeout(() => pollIsSpeaking(sessionid, pollCount + 1), 500);
+                } else if (pollCount < MAX_WAIT_WITHOUT_SPEAKING) {
+                    // 【Zegao】Not speaking yet, keep waiting
+                    setTimeout(() => pollIsSpeaking(sessionid, pollCount + 1), 500);
+                } else {
+                    // 【Zegao】Timed out or finished speaking, restore the button
+                    applyState('idle');
+                }
+            })
+            .catch(() => {
+                // 【Zegao】Restore on API failure to avoid a stuck state
+                applyState('idle');
+            });
+        }
+
+        // 【Zegao】Initialize button state
+        applyState('idle');
+    })();
+
+  
+</script>
+</body>
+</html>

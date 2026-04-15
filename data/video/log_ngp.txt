@@ -1,0 +1,25 @@
+[INFO] Trainer: ngp | 2025-04-03_21-30-32 | cuda | fp16 | data/video
+[INFO] #parameters: 1789121
+[INFO] Loading data/pretrained/ngp_kf.pth ...
+[INFO] loaded model.
+[INFO] load at epoch 24, global step 100536
+[WARN] Failed to load optimizer.
+[INFO] loaded scheduler.
+[INFO] loaded scaler.
+[INFO] Trainer: ngp | 2025-04-04_10-48-57 | cuda | fp16 | data/video
+[INFO] #parameters: 1789121
+[INFO] Loading data/pretrained/ngp_kf.pth ...
+[INFO] loaded model.
+[WARN] missing keys: ['individual_codes_torso', 'anchor_points', 'density_grid_torso', 'torso_deform_net.net.0.weight', 'torso_deform_net.net.1.weight', 'torso_deform_net.net.2.weight', 'torso_encoder.embeddings', 'torso_encoder.offsets', 'torso_net.net.0.weight', 'torso_net.net.1.weight', 'torso_net.net.2.weight']
+[INFO] load at epoch 30, global step 125670
+[WARN] Failed to load optimizer.
+[INFO] loaded scheduler.
+[INFO] loaded scaler.
+[INFO] Trainer: ngp | 2025-04-04_11-00-06 | cuda | fp16 | data/video
+[INFO] #parameters: 1789121
+[INFO] Loading data/pretrained/ngp_kf.pth ...
+[INFO] loaded model.
+[INFO] load at epoch 24, global step 100536
+[WARN] Failed to load optimizer.
+[INFO] loaded scheduler.
+[INFO] loaded scaler.

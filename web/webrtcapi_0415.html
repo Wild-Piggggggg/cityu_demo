@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>WebRTC webcam</title>
+    <style>
+        body {
+            background-image: url('./images/backimage.gif');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center center;
+            background-attachment: fixed;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        }
+    
+        button {
+            padding: 8px 16px;
+        }
+    
+        video {
+            width: 100%;
+        }
+    
+        .option {
+            margin-bottom: 8px;
+        }
+    
+        #media {
+            max-width: 1280px;
+        }
+
+        /* 【Zegao】英语口语对话区域样式 */
+        .voice-section {
+            display: inline-flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            margin: 12px 0;
+            padding: 14px 20px;
+            background: rgba(255, 255, 255, 0.85);
+            border-radius: 16px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.15);
+            min-width: 260px;
+        }
+
+        .voice-section h3 {
+            margin: 0 0 4px;
+            font-size: 14px;
+            color: #555;
+            letter-spacing: 0.5px;
+        }
+
+        #btn_voice {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 28px;
+            font-size: 16px;
+            font-weight: 600;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: background 0.25s, transform 0.15s, box-shadow 0.25s;
+            outline: none;
+            min-width: 180px;
+            justify-content: center;
+            background: #4CAF50;
+            color: #fff;
+            box-shadow: 0 4px 12px rgba(76,175,80,0.4);
+        }
+
+        #btn_voice:hover:not(:disabled) {
+            background: #43A047;
+            transform: translateY(-1px);
+            box-shadow: 0 6px 16px rgba(76,175,80,0.45);
+        }
+
+        #btn_voice.recording {
+            background: #e53935;
+            box-shadow: 0 4px 12px rgba(229,57,53,0.4);
+            animation: voice-pulse 1.2s ease-in-out infinite;
+        }
+
+        #btn_voice:disabled {
+            background: #9E9E9E;
+            cursor: not-allowed;
+            box-shadow: none;
+            transform: none;
+        }
+
+        @keyframes voice-pulse {
+            0%   { transform: scale(1); }
+            50%  { transform: scale(1.04); }
+            100% { transform: scale(1); }
+        }
+
+        #voice-status {
+            font-size: 13px;
+            color: #666;
+            min-height: 18px;
+            text-align: center;
+        }
+
+        #voice-recognized {
+            font-size: 13px;
+            color: #1565C0;
+            max-width: 240px;
+            text-align: center;
+            word-break: break-word;
+            min-height: 18px;
+        }
+    </style>
+    
+</head>
+<body>
+
+<div class="option">
+    <input id="use-stun" type="checkbox"/>
+    <label for="use-stun">Use STUN server</label>
+</div>
+<button id="start" onclick="start()">Start</button>
+<button id="stop" style="display: none" onclick="stop()">Stop</button>
+<button class="btn btn-primary" id="btn_start_record">Start Recording</button>
+<button class="btn btn-primary" id="btn_stop_record" disabled>Stop Recording</button>
+<!-- <input type="hidden" id="sessionid" value="0"> -->
+<div class="option">
+    <label for="sessionid">Session ID:</label>
+    <input type="text" id="sessionid" value="0" readonly>
+</div>
+
+<!-- 【Zegao】英语口语对话区 -->
+<div class="voice-section">
+    <h3>🗣 英语口语对话</h3>
+    <button id="btn_voice">🎤 开始说话</button>
+    <div id="voice-status"></div>
+    <div id="voice-recognized"></div>
+</div>
+
+<form class="form-inline" id="echo-form">
+    <div class="form-group">
+      <p>input text</p>
+      <textarea cols="2" rows="3" style="width:600px;height:50px;" class="form-control" id="message">test</textarea>
+    </div>
+    <button type="submit" class="btn btn-default">Send</button>
+</form>
+
+<div id="media">
+    <h2>Media</h2>
+
+    <audio id="audio" autoplay="true"></audio>
+    <video id="video" style="width:600px;" autoplay="true" playsinline="true"></video>
+</div>
+
+<script src="client.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sockjs-client@1.6.1/dist/sockjs.min.js"></script>
+<script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+</body>
+<script type="text/javascript" charset="utf-8">
+
+	$(document).ready(function() {
+	  // var host = window.location.hostname
+	  // var ws = new WebSocket("ws://"+host+":8000/humanecho");
+	  // //document.getElementsByTagName("video")[0].setAttribute("src", aa["video"]);
+	  // ws.onopen = function() {
+		// console.log('Connected');
+	  // };
+	  // ws.onmessage = function(e) {
+		// console.log('Received: ' + e.data);
+		// data = e
+		// var vid = JSON.parse(data.data); 
+		// console.log(typeof(vid),vid)
+		// //document.getElementsByTagName("video")[0].setAttribute("src", vid["video"]);
+		
+	  // };
+	  // ws.onclose = function(e) {
+		// console.log('Closed');
+	  // };
+
+	  $('#echo-form').on('submit', function(e) {
+      e.preventDefault();
+      var message = $('#message').val();
+      console.log('Sending: ' + message);
+      console.log('sessionid: ',document.getElementById('sessionid').value);
+      fetch('/human', {
+            body: JSON.stringify({
+                text: message,
+                type: 'echo',
+                interrupt: true,
+                sessionid:parseInt(document.getElementById('sessionid').value),
+            }),
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            method: 'POST'
+      });
+      //ws.send(message);
+      $('#message').val('');
+	  });
+
+    $('#btn_start_record').click(function() {
+        // 开始录制
+        console.log('Starting recording...');
+        fetch('/record', {
+            body: JSON.stringify({
+                    type: 'start_record',
+                    sessionid:parseInt(document.getElementById('sessionid').value),
+                }),
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+            method: 'POST'
+        }).then(function(response) {
+            if (response.ok) {
+                console.log('Recording started.');
+                $('#btn_start_record').prop('disabled', true);
+                $('#btn_stop_record').prop('disabled', false);
+                // $('#btn_download').prop('disabled', true);
+            } else {
+                console.error('Failed to start recording.');
+            }
+        }).catch(function(error) {
+            console.error('Error:', error);
+        });
+    });
+
+    $('#btn_stop_record').click(function() {
+        // 结束录制
+        console.log('Stopping recording...');
+        fetch('/record', {
+            body: JSON.stringify({
+                    type: 'end_record',
+                    sessionid:parseInt(document.getElementById('sessionid').value),
+                }),
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+            method: 'POST'
+        }).then(function(response) {
+            if (response.ok) {
+                console.log('Recording stopped.');
+                $('#btn_start_record').prop('disabled', false);
+                $('#btn_stop_record').prop('disabled', true);
+                // $('#btn_download').prop('disabled', false);
+            } else {
+                console.error('Failed to stop recording.');
+            }
+        }).catch(function(error) {
+            console.error('Error:', error);
+        });
+    });
+
+    // $('#btn_download').click(function() {
+    //     // 下载视频文件
+    //     console.log('Downloading video...');
+    //     fetch('/record_lasted.mp4', {
+    //         method: 'GET'
+    //     }).then(function(response) {
+    //         if (response.ok) {
+    //             return response.blob();
+    //         } else {
+    //             throw new Error('Failed to download the video.');
+    //         }
+    //     }).then(function(blob) {
+    //         // 创建一个 Blob 对象
+    //         const url = window.URL.createObjectURL(blob);
+    //         // 创建一个隐藏的可下载链接
+    //         const a = document.createElement('a');
+    //         a.style.display = 'none';
+    //         a.href = url;
+    //         a.download = 'record_lasted.mp4';
+    //         document.body.appendChild(a);
+    //         // 触发下载
+    //         a.click();
+    //         // 清理
+    //         window.URL.revokeObjectURL(url);
+    //         document.body.removeChild(a);
+    //         console.log('Video downloaded successfully.');
+    //     }).catch(function(error) {
+    //         console.error('Error:', error);
+    //     });
+    // });
+
+	});
+
+    // ─────────────────────────────────────────────────────────────
+    // 【Zegao】英语口语对话：录音按钮状态机 + 轮询 is_speaking
+    // 状态：idle → recording → processing → waiting → idle
+    // ─────────────────────────────────────────────────────────────
+    (function () {
+        const voiceBtn       = document.getElementById('btn_voice');
+        const voiceStatus    = document.getElementById('voice-status');
+        const voiceRecognized = document.getElementById('voice-recognized');
+
+        let mediaRecorder  = null;
+        let audioChunks    = [];
+        let voiceState     = 'idle'; // idle | recording | processing | waiting
+
+        const STATE_CONFIG = {
+            idle: {
+                label:    '🎤 开始说话',
+                status:   '',
+                disabled: false,
+                cls:      '',
+            },
+            recording: {
+                label:    '⏹ 停止录音',
+                status:   '正在录音，请用英语说话…',
+                disabled: false,
+                cls:      'recording',
+            },
+            processing: {
+                label:    '⏳ 识别中…',
+                status:   '正在识别语音并生成回复，请稍候…',
+                disabled: true,
+                cls:      '',
+            },
+            waiting: {
+                label:    '💬 数字人说话中…',
+                status:   '等待数字人说完，按钮将自动恢复',
+                disabled: true,
+                cls:      '',
+            },
+        };
+
+        function applyState(state) {
+            voiceState = state;
+            const cfg = STATE_CONFIG[state];
+            voiceBtn.textContent    = cfg.label;
+            voiceBtn.disabled       = cfg.disabled;
+            voiceBtn.className      = cfg.cls;
+            voiceStatus.textContent = cfg.status;
+        }
+
+        voiceBtn.addEventListener('click', async () => {
+            if (voiceState === 'idle') {
+                await startRecording();
+            } else if (voiceState === 'recording') {
+                stopRecording();
+            }
+        });
+
+        async function startRecording() {
+            try {
+                const stream = await navigator.mediaDevices.getUserMedia({ audio: true, video: false });
+                audioChunks  = [];
+
+                // 优先使用浏览器支持的最佳格式
+                const mimeType = MediaRecorder.isTypeSupported('audio/webm;codecs=opus')
+                    ? 'audio/webm;codecs=opus'
+                    : 'audio/webm';
+
+                mediaRecorder = new MediaRecorder(stream, { mimeType });
+
+                mediaRecorder.ondataavailable = (e) => {
+                    if (e.data.size > 0) audioChunks.push(e.data);
+                };
+
+                mediaRecorder.onstop = async () => {
+                    // 立即释放麦克风
+                    stream.getTracks().forEach((t) => t.stop());
+                    applyState('processing');
+                    voiceRecognized.textContent = '';
+                    const audioBlob = new Blob(audioChunks, { type: mimeType });
+                    await sendVoiceToServer(audioBlob);
+                };
+
+                mediaRecorder.start();
+                applyState('recording');
+            } catch (err) {
+                console.error('[VoiceChat] Microphone access denied:', err);
+                alert('无法访问麦克风，请在浏览器中允许麦克风权限后重试。');
+                applyState('idle');
+            }
+        }
+
+        function stopRecording() {
+            if (mediaRecorder && mediaRecorder.state !== 'inactive') {
+                mediaRecorder.stop();
+            }
+        }
+
+        async function sendVoiceToServer(audioBlob) {
+            const sessionid = parseInt(document.getElementById('sessionid').value || '0');
+            const formData  = new FormData();
+            formData.append('audio', audioBlob, 'voice.webm');
+            formData.append('sessionid', String(sessionid));
+
+            try {
+                const response = await fetch('/voice_chat', {
+                    method: 'POST',
+                    body:   formData,
+                });
+                const data = await response.json();
+
+                if (data.code === 0) {
+                    console.log('[VoiceChat] Recognized:', data.text);
+                    voiceRecognized.textContent = `"${data.text}"`;
+                    applyState('waiting');
+                    // 给 nerfreal 一点启动时间后再开始轮询
+                    setTimeout(() => pollIsSpeaking(sessionid, 0), 1500);
+                } else {
+                    console.error('[VoiceChat] Error:', data.msg);
+                    voiceStatus.textContent = `⚠ ${data.msg}`;
+                    setTimeout(() => applyState('idle'), 3000);
+                }
+            } catch (err) {
+                console.error('[VoiceChat] Network error:', err);
+                voiceStatus.textContent = '⚠ 网络错误，请重试';
+                setTimeout(() => applyState('idle'), 3000);
+            }
+        }
+
+        /**
+         * 轮询 /is_speaking：
+         * - 最多等待 seenTrue 前 20 次（10 秒）让数字人开口
+         * - 一旦见过 is_speaking=true，等到变回 false 为止再恢复按钮
+         */
+        function pollIsSpeaking(sessionid, pollCount) {
+            const MAX_WAIT_WITHOUT_SPEAKING = 20; // 20 × 500ms = 10s
+
+            fetch('/is_speaking', {
+                method:  'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body:    JSON.stringify({ sessionid }),
+            })
+            .then((r) => r.json())
+            .then((data) => {
+                const isSpeaking = data.data === true || data.data === 1;
+
+                if (isSpeaking) {
+                    // 数字人正在说话，继续等待
+                    setTimeout(() => pollIsSpeaking(sessionid, pollCount + 1), 500);
+                } else if (pollCount < MAX_WAIT_WITHOUT_SPEAKING) {
+                    // 还没开始说话，继续等
+                    setTimeout(() => pollIsSpeaking(sessionid, pollCount + 1), 500);
+                } else {
+                    // 超时或说完，恢复按钮
+                    applyState('idle');
+                }
+            })
+            .catch(() => {
+                // 接口异常时也恢复按钮，避免永久锁死
+                applyState('idle');
+            });
+        }
+
+        // 初始化按钮状态
+        applyState('idle');
+    })();
+
+  
+</script>
+</html>

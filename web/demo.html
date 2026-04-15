@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Remote Interview</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            background: linear-gradient(rgba(255,255,255,0.8), rgba(255,255,255,0.8)), /* 半透明白色遮罩 */
+                        url('https://images.unsplash.com/photo-1497864149936-b76d5e11537a?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80'); /* 背景图片 */
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+
+        .cityu {
+            width: 250px;
+            margin-bottom: 20px;
+            filter: drop-shadow(2px 2px 4px rgba(0,0,0,0.1)); /* 添加投影 */
+        }
+
+        .notification-box {
+            background-color: rgba(255,255,255,0.95); /* 半透明白色背景 */
+            padding: 20px 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+            text-align: center;
+            border: 1px solid rgba(0,0,0,0.05);
+        }
+
+        .prompt {
+            margin: 0;
+            font-size: 18px;
+            color: #2c3e50; /* 深蓝色文字 */
+            line-height: 1.6;
+            font-weight: 500;
+        }
+
+        .container {
+            background-color: rgba(255,255,255,0.95); /* 半透明容器 */
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.12);
+            width: 80%;
+            max-width: 800px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            backdrop-filter: blur(2px); /* 毛玻璃效果 */
+        }
+
+        .video-container {
+            width: 100%;
+            height: 450px;
+            background-color: #f8f9fa;
+            border-radius: 12px;
+            margin-bottom: 25px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            position: relative;
+            border: 1px solid rgba(0,0,0,0.08);
+        }
+
+        .video-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* 确保图片填充容器 */
+            border-radius: 12px;
+        }
+
+        .chat-container {
+            width: 100%;
+            height: 150px;
+            border: 1px solid #e0e0e0; /* 更浅的边框颜色 */
+            border-radius: 8px;
+            padding: 15px;
+            overflow-y: auto;
+            margin-bottom: 20px;
+            background-color: #fafafa; /* 浅灰色背景 */
+        }
+
+        .chat-message {
+            margin-bottom: 10px;
+            font-size: 14px;
+            line-height: 1.5; /* 增加行高，提升可读性 */
+        }
+
+        .chat-message .sender {
+            font-weight: 600; /* 加粗发送者名称 */
+            color: #007bff; /* 蓝色，突出发送者 */
+        }
+
+        .chat-message .message {
+            color: #555;
+        }
+
+        .input-container {
+            width: 100%;
+            display: flex;
+            gap: 10px;
+        }
+
+        .input-container input {
+            flex: 1;
+            padding: 12px;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 14px;
+            outline: none; /* 移除默认的聚焦边框 */
+            transition: border-color 0.3s ease; /* 添加过渡效果 */
+        }
+
+        .input-container input:focus {
+            border-color: #007bff; /* 聚焦时边框变为蓝色 */
+        }
+
+        .input-container button {
+            padding: 12px 24px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: background-color 0.3s ease; /* 添加过渡效果 */
+        }
+
+        .input-container button:hover {
+            background-color: #0056b3; /* 鼠标悬停时按钮颜色变深 */
+        }
+
+        .end-interview-button {
+            margin-top: 20px;
+            padding: 12px 24px;
+            background-color: #dc3545;
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: background-color 0.3s ease; /* 添加过渡效果 */
+        }
+
+        .end-interview-button:hover {
+            background-color: #c82333; /* 鼠标悬停时按钮颜色变深 */
+        }
+    </style>
+</head>
+<body>
+    <img class="cityu" src="C:\Users\Administrator\Desktop\xhh.png" alt="Logo"> <!-- 插入 Logo -->
+
+    <div class="notification-box">
+        <p class="prompt">If you are ready, please say "Now you can ask me questions."</p>
+        <p class="prompt">Then the agent will talk to you~</p>
+    </div>
+
+    <div class="container">
+        <div class="video-container">
+            <img src="C:\Users\Administrator\Desktop\lj.png" alt="Video Placeholder"> <!-- 插入视频占位图 -->
+        </div>
+
+        <div class="chat-container" id="chatBox">
+            <div class="chat-message">
+                <span class="sender">System:</span>
+                <span class="message">Welcome to the interview!</span>
+                <br>
+                <span class="sender">Attention:</span>
+                <span class="message">Once any cheating behavior is discovered, your qualification will be disqualified.</span>
+            </div>
+        </div>
+
+        <div class="input-container">
+            <input type="text" id="chatInput" placeholder="Type your message here...">
+            <button onclick="sendMessage()">Send</button>
+        </div>
+
+        <button class="end-interview-button" onclick="endInterview()">End Interview</button>
+    </div>
+
+    <script>
+        const chatBox = document.getElementById('chatBox');
+        const chatInput = document.getElementById('chatInput');
+
+        function sendMessage() {
+            const message = chatInput.value.trim();
+            if (message) {
+                const messageElement = document.createElement('div');
+                messageElement.classList.add('chat-message');
+                messageElement.innerHTML = `<span class="sender">You:</span> <span class="message">${message}</span>`;
+                chatBox.appendChild(messageElement);
+                chatInput.value = '';
+                chatBox.scrollTop = chatBox.scrollHeight;
+            }
+        }
+
+        function endInterview() {
+            if (confirm('Are you sure you want to end the interview?')) {
+                alert('Interview ended.');
+            }
+        }
+    </script>
+</body>
+</html>

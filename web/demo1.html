@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>City University of Hong Kong - Smart Interview System</title>
+    <style>
+        :root {
+            --primary-color: linear-gradient(208.5deg, #7c0378, #e46f00);   /* University Blue */
+            --secondary-color:  linear-gradient(208.5deg, #e46f00, #7c0378); /* Accent Red */
+            --text-dark: #2d2d2d;
+            --text-light: #666;
+            --bg-light: #f8f9fa;
+            --header-light:#ffffff;
+        }
+
+        .contact-info {
+            font-size: 20px;
+        }
+
+        /* User Avatar */
+        .user-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%; /* Make it circular */
+            overflow: hidden;
+            border: 2px solid var(--secondary-color);
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .user-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .user-avatar:hover {
+            transform: scale(1.1); /* Add hover effect */
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: var(--bg-light);
+            color: var(--text-dark);
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Header Section */
+        .header {
+            background: var(--header-light);
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: white;
+        }
+
+        .university-logo {
+            height: 80px;
+        }
+
+        /* Main Content Area */
+        .main-container {
+            flex: 1;
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+            display: grid;
+            grid-template-columns: 3fr 1fr;
+            gap: 2rem;
+        }
+
+        .interview-panel {
+            background: #eeeeee;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            padding: 2rem;
+        }
+
+        .interview-title {
+            color: var(--primary-color);
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        /* Progress Tracking */
+        .progress-tracker {
+            display: flex;
+            justify-content: space-between;
+            margin: 2rem 0;
+            padding: 1rem;
+            background: var(--bg-light);
+            border-radius: 6px;
+        }
+
+        .progress-item {
+            text-align: center;
+        }
+
+        .progress-bar {
+            height: 8px;
+            background: #ddd;
+            border-radius: 4px;
+            overflow: hidden;
+            margin: 1rem 0;
+        }
+
+        .progress-fill {
+            width: 30%;
+            height: 100%;
+            background: var(--secondary-color);
+            transition: width 0.3s ease;
+        }
+
+        /* Video Container */
+        .video-container {
+            background: #ffffff;
+            height: 450px;
+            border-radius: 8px;
+            margin: 2rem 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .video-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* 确保图片填充容器 */
+            border-radius: 12px;
+        }
+
+        /* Sidebar Guidelines */
+        .guidelines-panel {
+            width: 300px;
+            background: #eeeeee;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 2rem;
+        }
+
+        .guidelines-title {
+            color: var(--secondary-color);
+            border-left: 4px solid var(--secondary-color);
+            padding-left: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        /* Footer Section */
+        .footer {
+            background: var(--primary-color);
+            color: white;
+            padding: 3rem 2rem;
+            margin-top: auto;
+        }
+
+        .footer-content {
+            /* max-width: 1000px; */
+            max-height: 100px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .footer-section {
+            margin-bottom: 2rem;
+        }
+
+        .footer-title {
+            border-bottom: 2px solid var(--secondary-color);
+            padding-bottom: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .social-icon {
+            width: 32px;
+            height: 32px;
+            transition: opacity 0.3s;
+        }
+
+        .social-icon:hover {
+            opacity: 0.8;
+        }
+
+        .copyright {
+            text-align: center;
+            margin-top: 2rem;
+            opacity: 0.8;
+        }
+
+        @media (max-width: 768px) {
+            .main-container {
+                grid-template-columns: 1fr;
+                padding: 0 1rem;
+            }
+            
+            .footer-content {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <img src="C:\Users\Administrator\Desktop\xhh.png" alt="University Logo" class="university-logo">
+        <div class="user-avatar">
+            <img src="C:\Users\Administrator\Desktop\user_avatar.png" alt="User Avatar">
+        </div>
+    </header>
+
+    <main class="main-container">
+        <section class="interview-panel">
+            <h1 class="interview-title">CityU-DG Smart Interview System</h1>
+            
+            <div class="progress-tracker">
+                <div class="progress-item">
+                    <div>Time Remaining</div>
+                    <div>5:00 minutes</div>
+                </div>
+                <div class="progress-item">
+                    <div>Interview Progress</div>
+                    <div>Question 3/10</div>
+                </div>
+            </div>
+
+            <div class="progress-bar">
+                <div class="progress-fill"></div>
+            </div>
+
+            <div class="video-container">
+                <img src="C:\Users\Administrator\Desktop\lj.png" alt="Video Placeholder">
+            </div>
+        </section>
+
+        <aside class="guidelines-panel">
+            <h2 class="guidelines-title">Interview Guidelines</h2>
+            <ul>
+                <li>Keep your camera enabled</li>
+                <li>Ensure a quiet environment</li>
+                <li>Answer within time limits</li>
+                <li>Maintain professional attire</li>
+                <li>Test equipment beforehand</li>
+            </ul>
+        </aside>
+    </main>
+
+    <footer class="footer">
+        <!-- <div class="footer-content"> -->
+            <!-- <div class="footer-section">
+                <h3 class="footer-title">Contact Us</h3>
+                <p>Admissions Office<br>
+                Tel: +852 3442-7654<br>
+                Technical support: 0796-21183080<br>
+            </div> -->
+
+            <!-- <div class="footer-section">
+                <h3 class="footer-title">Connect With Us</h3>
+                <div class="social-links">
+                    <a href="#"><img src="C:\Users\Administrator\Desktop\wechat-icon.svg" alt="WeChat" class="social-icon"></a>
+                    <a href="#"><img src="C:\Users\Administrator\Desktop\QQ-icon.svg" alt="LinkedIn" class="social-icon"></a>
+                    <a href="#"><img src="C:\Users\Administrator\Desktop\weibo-icon.svg" alt="Facebook" class="social-icon"></a>
+                    <a href="#"><img src="youtube-icon.svg" alt="YouTube" class="social-icon"></a>
+                </div>
+            </div> -->
+
+            <!-- <div class="footer-section">
+                <h3 class="footer-title">Quick Links</h3>
+                <ul>
+                    <li><a >Careers</a></li>
+                    <li><a >Privacy Policy</a></li>
+                    <li><a >Accessibility</a></li>
+                </ul>
+            </div> -->
+        <!-- </div> -->
+
+        <div class="copyright">
+            Technical support: 0796-21183080<br>
+            © 2024 City University of Hong Kong. All rights reserved.<br>
+            ICP备案号: 粤ICP备2023033832号
+        </div>
+    </footer>
+</body>
+</html>

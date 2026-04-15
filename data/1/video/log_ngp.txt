@@ -1,0 +1,880 @@
+[INFO] Trainer: ngp | 2025-01-14_23-26-20 | cuda | fp16 | data/video
+[INFO] #parameters: 1789121
+[INFO] Loading data/pretrained/ngp_kf.pth ...
+[INFO] loaded model.
+[INFO] load at epoch 28, global step 203616
+[WARN] Failed to load optimizer.
+[INFO] loaded scheduler.
+[INFO] loaded scaler.
+[INFO] Trainer: ngp | 2025-01-14_23-49-46 | cuda | fp16 | data/video
+[INFO] #parameters: 1789121
+[INFO] Loading data/pretrained/ngp_kf.pth ...
+[INFO] loaded model.
+[INFO] load at epoch 28, global step 203616
+[WARN] Failed to load optimizer.
+[INFO] loaded scheduler.
+[INFO] loaded scaler.
+[INFO] Trainer: ngp | 2025-01-14_23-56-35 | cuda | fp16 | data/video
+[INFO] #parameters: 1789121
+[INFO] Loading data/pretrained/ngp_kf.pth ...
+[INFO] loaded model.
+[INFO] load at epoch 28, global step 203616
+[WARN] Failed to load optimizer.
+[INFO] loaded scheduler.
+[INFO] loaded scaler.
+[INFO] Trainer: ngp | 2025-01-15_00-00-39 | cuda | fp16 | data/video
+[INFO] #parameters: 1789121
+[INFO] Loading data/pretrained/ngp_kf.pth ...
+[INFO] loaded model.
+[INFO] load at epoch 28, global step 203616
+[WARN] Failed to load optimizer.
+[INFO] loaded scheduler.
+[INFO] loaded scaler.
+[INFO] Trainer: ngp | 2025-01-15_00-10-15 | cuda | fp16 | data/video
+[INFO] #parameters: 1789121
+[INFO] Loading data/pretrained/ngp_kf.pth ...
+[INFO] loaded model.
+[INFO] load at epoch 28, global step 203616
+[WARN] Failed to load optimizer.
+[INFO] loaded scheduler.
+[INFO] loaded scaler.
+[INFO] Trainer: ngp | 2025-01-15_00-52-37 | cuda | fp16 | data/video
+[INFO] #parameters: 1789121
+[INFO] Loading data/pretrained/ngp_kf.pth ...
+[INFO] loaded model.
+[INFO] load at epoch 28, global step 203616
+[WARN] Failed to load optimizer.
+[INFO] loaded scheduler.
+[INFO] loaded scaler.
+[INFO] Trainer: ngp | 2025-01-15_01-27-39 | cuda | fp16 | data/video
+[INFO] #parameters: 1789121
+[INFO] Loading data/pretrained/ngp_kf.pth ...
+[INFO] loaded model.
+[INFO] load at epoch 28, global step 203616
+[WARN] Failed to load optimizer.
+[INFO] loaded scheduler.
+[INFO] loaded scaler.
+[INFO] Trainer: ngp | 2025-01-15_01-49-20 | cuda | fp16 | data/video
+[INFO] #parameters: 1789121
+[INFO] Loading data/pretrained/ngp_kf.pth ...
+[INFO] loaded model.
+[INFO] load at epoch 28, global step 203616
+[WARN] Failed to load optimizer.
+[INFO] loaded scheduler.
+[INFO] loaded scaler.
+[INFO] Trainer: ngp | 2025-01-15_02-02-09 | cuda | fp16 | data/video
+[INFO] #parameters: 1789121
+[INFO] Loading data/pretrained/ngp_kf.pth ...
+[INFO] loaded model.
+[INFO] load at epoch 28, global step 203616
+[WARN] Failed to load optimizer.
+[INFO] loaded scheduler.
+[INFO] loaded scaler.
+[INFO] Trainer: ngp | 2025-01-15_02-04-26 | cuda | fp16 | data/video
+[INFO] #parameters: 1789121
+[INFO] Loading data/pretrained/ngp_kf.pth ...
+[INFO] loaded model.
+[INFO] load at epoch 28, global step 203616
+[WARN] Failed to load optimizer.
+[INFO] loaded scheduler.
+[INFO] loaded scaler.
+[INFO] Trainer: ngp | 2025-01-15_02-15-03 | cuda | fp16 | data/video
+[INFO] #parameters: 1789121
+[INFO] Loading data/pretrained/ngp_kf.pth ...
+[INFO] loaded model.
+[INFO] load at epoch 28, global step 203616
+[WARN] Failed to load optimizer.
+[INFO] loaded scheduler.
+[INFO] loaded scaler.
+[INFO] Trainer: ngp | 2025-01-15_02-29-45 | cuda | fp16 | data/video
+[INFO] #parameters: 1789121
+[INFO] Loading data/pretrained/ngp_kf.pth ...
+[INFO] loaded model.
+[INFO] load at epoch 28, global step 203616
+[WARN] Failed to load optimizer.
+[INFO] loaded scheduler.
+[INFO] loaded scaler.
+[INFO] Trainer: ngp | 2025-01-15_02-38-54 | cuda | fp16 | data/video
+[INFO] #parameters: 1789121
+[INFO] Loading data/pretrained/ngp_kf.pth ...
+[INFO] loaded model.
+[INFO] load at epoch 28, global step 203616
+[WARN] Failed to load optimizer.
+[INFO] loaded scheduler.
+[INFO] loaded scaler.
+[INFO] Trainer: ngp | 2025-01-16_03-28-18 | cuda | fp16 | data/video
+[INFO] #parameters: 1789121
+[INFO] Loading data/pretrained/ngp_kf.pth ...
+[INFO] loaded model.
+[INFO] load at epoch 28, global step 203616
+[WARN] Failed to load optimizer.
+[INFO] loaded scheduler.
+[INFO] loaded scaler.
+[INFO] Trainer: ngp | 2025-01-16_03-36-31 | cuda | fp16 | data/video
+[INFO] #parameters: 1789121
+[INFO] Loading data/pretrained/ngp_kf.pth ...
+[INFO] loaded model.
+[INFO] load at epoch 28, global step 203616
+[WARN] Failed to load optimizer.
+[INFO] loaded scheduler.
+[INFO] loaded scaler.
+[INFO] Trainer: ngp | 2025-01-16_03-45-07 | cuda | fp16 | data/video
+[INFO] #parameters: 1789121
+[INFO] Loading data/pretrained/ngp_kf.pth ...
+[INFO] loaded model.
+[INFO] load at epoch 28, global step 203616
+[WARN] Failed to load optimizer.
+[INFO] loaded scheduler.
+[INFO] loaded scaler.
+[INFO] Trainer: ngp | 2025-01-16_03-45-51 | cuda | fp16 | data/video
+[INFO] #parameters: 1789121
+[INFO] Loading data/pretrained/ngp_kf.pth ...
+[INFO] loaded model.
+[INFO] load at epoch 28, global step 203616
+[WARN] Failed to load optimizer.
+[INFO] loaded scheduler.
+[INFO] loaded scaler.
+[INFO] Trainer: ngp | 2025-01-16_03-46-04 | cuda | fp16 | data/video
+[INFO] #parameters: 1789121
+[INFO] Loading data/pretrained/ngp_kf.pth ...
+[INFO] loaded model.
+[INFO] load at epoch 28, global step 203616
+[WARN] Failed to load optimizer.
+[INFO] loaded scheduler.
+[INFO] loaded scaler.
+[INFO] Trainer: ngp | 2025-02-12_18-02-54 | cuda | fp16 | data/video
+[INFO] #parameters: 1789121
+[INFO] Loading data/pretrained/ngp_kf.pth ...
+[INFO] loaded model.
+[INFO] load at epoch 66, global step 200706
+[WARN] Failed to load optimizer.
+[INFO] loaded scheduler.
+[INFO] loaded scaler.
+[INFO] Trainer: ngp | 2025-02-13_22-25-25 | cuda | fp16 | data/video
+[INFO] #parameters: 1789121
+[INFO] Loading data/pretrained/ngp_kf.pth ...
+[INFO] loaded model.
+[INFO] load at epoch 66, global step 200706
+[WARN] Failed to load optimizer.
+[INFO] loaded scheduler.
+[INFO] loaded scaler.
+[INFO] Trainer: ngp | 2025-02-14_17-00-23 | cuda | fp16 | data/video
+[INFO] #parameters: 1789121
+[INFO] Loading data/pretrained/ngp_kf.pth ...
+[INFO] loaded model.
+[INFO] load at epoch 66, global step 200706
+[WARN] Failed to load optimizer.
+[INFO] loaded scheduler.
+[INFO] loaded scaler.
+[INFO] Trainer: ngp | 2025-02-14_17-02-55 | cuda | fp16 | data/video
+[INFO] #parameters: 1789121
+[INFO] Loading data/pretrained/ngp_kf.pth ...
+[INFO] loaded model.
+[INFO] load at epoch 66, global step 200706
+[WARN] Failed to load optimizer.
+[INFO] loaded scheduler.
+[INFO] loaded scaler.
+[INFO] Trainer: ngp | 2025-02-14_22-21-16 | cuda | fp16 | data/video
+[INFO] #parameters: 1789121
+[INFO] Loading data/pretrained/ngp_kf.pth ...
+[INFO] loaded model.
+[INFO] load at epoch 66, global step 200706
+[WARN] Failed to load optimizer.
+[INFO] loaded scheduler.
+[INFO] loaded scaler.
+[INFO] Trainer: ngp | 2025-02-19_16-27-06 | cuda | fp16 | data/video
+[INFO] #parameters: 1789121
+[INFO] Loading data/pretrained/ngp_kf.pth ...
+[INFO] loaded model.
+[INFO] load at epoch 66, global step 200706
+[WARN] Failed to load optimizer.
+[INFO] loaded scheduler.
+[INFO] loaded scaler.
+[INFO] Trainer: ngp | 2025-02-27_15-58-38 | cuda | fp16 | data/video
+[INFO] #parameters: 1789121
+[INFO] Loading data/pretrained/ngp_kf.pth ...
+[INFO] loaded model.
+[INFO] load at epoch 66, global step 200706
+[WARN] Failed to load optimizer.
+[INFO] loaded scheduler.
+[INFO] loaded scaler.
+[INFO] Trainer: ngp | 2025-02-27_16-05-40 | cuda | fp16 | data/video
+[INFO] #parameters: 1789121
+[INFO] Loading data/pretrained/ngp_kf.pth ...
+[INFO] loaded model.
+[INFO] load at epoch 66, global step 200706
+[WARN] Failed to load optimizer.
+[INFO] loaded scheduler.
+[INFO] loaded scaler.
+[INFO] Trainer: ngp | 2025-02-27_16-14-11 | cuda | fp16 | data/video
+[INFO] #parameters: 1789121
+[INFO] Loading data/pretrained/ngp_kf.pth ...
+[INFO] loaded model.
+[INFO] load at epoch 66, global step 200706
+[WARN] Failed to load optimizer.
+[INFO] loaded scheduler.
+[INFO] loaded scaler.
+[INFO] Trainer: ngp | 2025-02-27_16-14-44 | cuda | fp16 | data/video
+[INFO] #parameters: 1789121
+[INFO] Loading data/pretrained/ngp_kf.pth ...
+[INFO] loaded model.
+[INFO] load at epoch 66, global step 200706
+[WARN] Failed to load optimizer.
+[INFO] loaded scheduler.
+[INFO] loaded scaler.
+[INFO] Trainer: ngp | 2025-02-27_16-18-05 | cuda | fp16 | data/video
+[INFO] #parameters: 1789121
+[INFO] Loading data/pretrained/ngp_kf.pth ...
+[INFO] loaded model.
+[INFO] load at epoch 66, global step 200706
+[WARN] Failed to load optimizer.
+[INFO] loaded scheduler.
+[INFO] loaded scaler.
+[INFO] Trainer: ngp | 2025-02-27_18-14-51 | cuda | fp16 | data/video
+[INFO] #parameters: 1789121
+[INFO] Loading data/pretrained/ngp_kf.pth ...
+[INFO] loaded model.
+[INFO] load at epoch 66, global step 200706
+[WARN] Failed to load optimizer.
+[INFO] loaded scheduler.
+[INFO] loaded scaler.
+[INFO] Trainer: ngp | 2025-02-28_13-08-18 | cuda | fp16 | data/video
+[INFO] #parameters: 1789121
+[INFO] Loading data/pretrained/ngp_kf.pth ...
+[INFO] loaded model.
+[INFO] load at epoch 66, global step 200706
+[WARN] Failed to load optimizer.
+[INFO] loaded scheduler.
+[INFO] loaded scaler.
+[INFO] Trainer: ngp | 2025-03-01_22-27-57 | cuda | fp16 | data/video
+[INFO] #parameters: 1789121
+[INFO] Loading data/pretrained/ngp_kf.pth ...
+[INFO] loaded model.
+[INFO] load at epoch 66, global step 200706
+[WARN] Failed to load optimizer.
+[INFO] loaded scheduler.
+[INFO] loaded scaler.
+[INFO] Trainer: ngp | 2025-03-01_22-58-14 | cuda | fp16 | data/video
+[INFO] #parameters: 1789121
+[INFO] Loading data/pretrained/ngp_kf.pth ...
+[INFO] loaded model.
+[INFO] load at epoch 66, global step 200706
+[WARN] Failed to load optimizer.
+[INFO] loaded scheduler.
+[INFO] loaded scaler.
+[INFO] Trainer: ngp | 2025-03-01_23-01-02 | cuda | fp16 | data/video
+[INFO] #parameters: 1789121
+[INFO] Loading data/pretrained/ngp_kf.pth ...
+[INFO] loaded model.
+[INFO] load at epoch 66, global step 200706
+[WARN] Failed to load optimizer.
+[INFO] loaded scheduler.
+[INFO] loaded scaler.
+[INFO] Trainer: ngp | 2025-03-01_23-27-41 | cuda | fp16 | data/video
+[INFO] #parameters: 1789121
+[INFO] Loading data/pretrained/ngp_kf.pth ...
+[INFO] loaded model.
+[INFO] load at epoch 66, global step 200706
+[WARN] Failed to load optimizer.
+[INFO] loaded scheduler.
+[INFO] loaded scaler.
+[INFO] Trainer: ngp | 2025-03-01_23-37-37 | cuda | fp16 | data/video
+[INFO] #parameters: 1789121
+[INFO] Loading data/pretrained/ngp_kf.pth ...
+[INFO] loaded model.
+[INFO] load at epoch 66, global step 200706
+[WARN] Failed to load optimizer.
+[INFO] loaded scheduler.
+[INFO] loaded scaler.
+[INFO] Trainer: ngp | 2025-03-02_09-57-55 | cuda | fp16 | data/video
+[INFO] #parameters: 1789121
+[INFO] Loading data/pretrained/ngp_kf.pth ...
+[INFO] loaded model.
+[INFO] load at epoch 66, global step 200706
+[WARN] Failed to load optimizer.
+[INFO] loaded scheduler.
+[INFO] loaded scaler.
+[INFO] Trainer: ngp | 2025-03-02_10-05-18 | cuda | fp16 | data/video
+[INFO] #parameters: 1789121
+[INFO] Loading data/pretrained/ngp_kf.pth ...
+[INFO] loaded model.
+[INFO] load at epoch 66, global step 200706
+[WARN] Failed to load optimizer.
+[INFO] loaded scheduler.
+[INFO] loaded scaler.
+[INFO] Trainer: ngp | 2025-03-02_10-07-41 | cuda | fp16 | data/video
+[INFO] #parameters: 1789121
+[INFO] Loading data/pretrained/ngp_kf.pth ...
+[INFO] loaded model.
+[INFO] load at epoch 66, global step 200706
+[WARN] Failed to load optimizer.
+[INFO] loaded scheduler.
+[INFO] loaded scaler.
+[INFO] Trainer: ngp | 2025-03-02_10-17-48 | cuda | fp16 | data/video
+[INFO] #parameters: 1789121
+[INFO] Loading data/pretrained/ngp_kf.pth ...
+[INFO] loaded model.
+[INFO] load at epoch 66, global step 200706
+[WARN] Failed to load optimizer.
+[INFO] loaded scheduler.
+[INFO] loaded scaler.
+[INFO] Trainer: ngp | 2025-03-02_10-51-28 | cuda | fp16 | data/video
+[INFO] #parameters: 1789121
+[INFO] Loading data/pretrained/ngp_kf.pth ...
+[INFO] loaded model.
+[INFO] load at epoch 66, global step 200706
+[WARN] Failed to load optimizer.
+[INFO] loaded scheduler.
+[INFO] loaded scaler.
+[INFO] Trainer: ngp | 2025-03-03_15-53-19 | cuda | fp16 | data/video
+[INFO] #parameters: 1789121
+[INFO] Loading data/pretrained/ngp_kf.pth ...
+[INFO] loaded model.
+[INFO] load at epoch 66, global step 200706
+[WARN] Failed to load optimizer.
+[INFO] loaded scheduler.
+[INFO] loaded scaler.
+[INFO] Trainer: ngp | 2025-03-03_16-12-35 | cuda | fp16 | data/video
+[INFO] #parameters: 1789121
+[INFO] Loading data/pretrained/ngp_kf.pth ...
+[INFO] loaded model.
+[INFO] load at epoch 66, global step 200706
+[WARN] Failed to load optimizer.
+[INFO] loaded scheduler.
+[INFO] loaded scaler.
+[INFO] Trainer: ngp | 2025-03-03_17-00-59 | cuda | fp16 | data/video
+[INFO] #parameters: 1789121
+[INFO] Loading data/pretrained/ngp_kf.pth ...
+[INFO] loaded model.
+[INFO] load at epoch 66, global step 200706
+[WARN] Failed to load optimizer.
+[INFO] loaded scheduler.
+[INFO] loaded scaler.
+[INFO] Trainer: ngp | 2025-03-03_17-08-31 | cuda | fp16 | data/video
+[INFO] #parameters: 1789121
+[INFO] Loading data/pretrained/ngp_kf.pth ...
+[INFO] loaded model.
+[INFO] load at epoch 66, global step 200706
+[WARN] Failed to load optimizer.
+[INFO] loaded scheduler.
+[INFO] loaded scaler.
+[INFO] Trainer: ngp | 2025-03-03_18-21-16 | cuda | fp16 | data/video
+[INFO] #parameters: 1789121
+[INFO] Loading data/pretrained/ngp_kf.pth ...
+[INFO] loaded model.
+[INFO] load at epoch 66, global step 200706
+[WARN] Failed to load optimizer.
+[INFO] loaded scheduler.
+[INFO] loaded scaler.
+[INFO] Trainer: ngp | 2025-03-03_18-34-27 | cuda | fp16 | data/video
+[INFO] #parameters: 1789121
+[INFO] Loading data/pretrained/ngp_kf.pth ...
+[INFO] loaded model.
+[INFO] load at epoch 66, global step 200706
+[WARN] Failed to load optimizer.
+[INFO] loaded scheduler.
+[INFO] loaded scaler.
+[INFO] Trainer: ngp | 2025-03-04_17-18-01 | cuda | fp16 | data/video
+[INFO] #parameters: 1789121
+[INFO] Loading data/pretrained/ngp_kf.pth ...
+[INFO] loaded model.
+[INFO] load at epoch 66, global step 200706
+[WARN] Failed to load optimizer.
+[INFO] loaded scheduler.
+[INFO] loaded scaler.
+[INFO] Trainer: ngp | 2025-03-04_17-30-12 | cuda | fp16 | data/video
+[INFO] #parameters: 1789121
+[INFO] Loading data/pretrained/ngp_kf.pth ...
+[INFO] loaded model.
+[INFO] load at epoch 66, global step 200706
+[WARN] Failed to load optimizer.
+[INFO] loaded scheduler.
+[INFO] loaded scaler.
+[INFO] Trainer: ngp | 2025-03-04_19-04-22 | cuda | fp16 | data/video
+[INFO] #parameters: 1789121
+[INFO] Loading data/pretrained/ngp_kf.pth ...
+[INFO] loaded model.
+[INFO] load at epoch 66, global step 200706
+[WARN] Failed to load optimizer.
+[INFO] loaded scheduler.
+[INFO] loaded scaler.
+[INFO] Trainer: ngp | 2025-03-04_19-14-43 | cuda | fp16 | data/video
+[INFO] #parameters: 1789121
+[INFO] Loading data/pretrained/ngp_kf.pth ...
+[INFO] loaded model.
+[INFO] load at epoch 66, global step 200706
+[WARN] Failed to load optimizer.
+[INFO] loaded scheduler.
+[INFO] loaded scaler.
+[INFO] Trainer: ngp | 2025-03-04_20-04-17 | cuda | fp16 | data/video
+[INFO] #parameters: 1789121
+[INFO] Loading data/pretrained/ngp_kf.pth ...
+[INFO] loaded model.
+[INFO] load at epoch 66, global step 200706
+[WARN] Failed to load optimizer.
+[INFO] loaded scheduler.
+[INFO] loaded scaler.
+[INFO] Trainer: ngp | 2025-03-06_10-02-39 | cuda | fp16 | data/video
+[INFO] #parameters: 1789121
+[INFO] Loading data/pretrained/ngp_kf.pth ...
+[INFO] loaded model.
+[INFO] load at epoch 66, global step 200706
+[WARN] Failed to load optimizer.
+[INFO] loaded scheduler.
+[INFO] loaded scaler.
+[INFO] Trainer: ngp | 2025-03-07_00-25-58 | cuda | fp16 | data/video
+[INFO] #parameters: 1789121
+[INFO] Loading data/pretrained/ngp_kf.pth ...
+[INFO] loaded model.
+[INFO] load at epoch 66, global step 200706
+[WARN] Failed to load optimizer.
+[INFO] loaded scheduler.
+[INFO] loaded scaler.
+[INFO] Trainer: ngp | 2025-03-08_00-46-31 | cuda | fp16 | data/video
+[INFO] #parameters: 1789121
+[INFO] Loading data/pretrained/ngp_kf.pth ...
+[INFO] loaded model.
+[INFO] load at epoch 66, global step 200706
+[WARN] Failed to load optimizer.
+[INFO] loaded scheduler.
+[INFO] loaded scaler.
+[INFO] Trainer: ngp | 2025-03-08_00-49-34 | cuda | fp16 | data/video
+[INFO] #parameters: 1789121
+[INFO] Loading data/pretrained/ngp_kf.pth ...
+[INFO] loaded model.
+[INFO] load at epoch 66, global step 200706
+[WARN] Failed to load optimizer.
+[INFO] loaded scheduler.
+[INFO] loaded scaler.
+[INFO] Trainer: ngp | 2025-03-08_00-58-13 | cuda | fp16 | data/video
+[INFO] #parameters: 1789121
+[INFO] Loading data/pretrained/ngp_kf.pth ...
+[INFO] loaded model.
+[INFO] load at epoch 66, global step 200706
+[WARN] Failed to load optimizer.
+[INFO] loaded scheduler.
+[INFO] loaded scaler.
+[INFO] Trainer: ngp | 2025-03-08_01-03-51 | cuda | fp16 | data/video
+[INFO] #parameters: 1789121
+[INFO] Loading data/pretrained/ngp_kf.pth ...
+[INFO] loaded model.
+[INFO] load at epoch 66, global step 200706
+[WARN] Failed to load optimizer.
+[INFO] loaded scheduler.
+[INFO] loaded scaler.
+[INFO] Trainer: ngp | 2025-03-08_13-14-26 | cuda | fp16 | data/video
+[INFO] #parameters: 1789121
+[INFO] Loading data/pretrained/ngp_kf.pth ...
+[INFO] loaded model.
+[INFO] load at epoch 66, global step 200706
+[WARN] Failed to load optimizer.
+[INFO] loaded scheduler.
+[INFO] loaded scaler.
+[INFO] Trainer: ngp | 2025-03-08_13-21-31 | cuda | fp16 | data/video
+[INFO] #parameters: 1789121
+[INFO] Loading data/pretrained/ngp_kf.pth ...
+[INFO] loaded model.
+[INFO] load at epoch 66, global step 200706
+[WARN] Failed to load optimizer.
+[INFO] loaded scheduler.
+[INFO] loaded scaler.
+[INFO] Trainer: ngp | 2025-03-08_13-35-24 | cuda | fp16 | data/video
+[INFO] #parameters: 1789121
+[INFO] Loading data/pretrained/ngp_kf.pth ...
+[INFO] loaded model.
+[INFO] load at epoch 66, global step 200706
+[WARN] Failed to load optimizer.
+[INFO] loaded scheduler.
+[INFO] loaded scaler.
+[INFO] Trainer: ngp | 2025-03-08_14-31-16 | cuda | fp16 | data/video
+[INFO] #parameters: 1789121
+[INFO] Loading data/pretrained/ngp_kf.pth ...
+[INFO] loaded model.
+[INFO] load at epoch 66, global step 200706
+[WARN] Failed to load optimizer.
+[INFO] loaded scheduler.
+[INFO] loaded scaler.
+[INFO] Trainer: ngp | 2025-03-08_22-33-27 | cuda | fp16 | data/video
+[INFO] #parameters: 1789121
+[INFO] Loading data/pretrained/ngp_kf.pth ...
+[INFO] loaded model.
+[INFO] load at epoch 66, global step 200706
+[WARN] Failed to load optimizer.
+[INFO] loaded scheduler.
+[INFO] loaded scaler.
+[INFO] Trainer: ngp | 2025-03-08_22-40-17 | cuda | fp16 | data/video
+[INFO] #parameters: 1789121
+[INFO] Loading data/pretrained/ngp_kf.pth ...
+[INFO] loaded model.
+[INFO] load at epoch 66, global step 200706
+[WARN] Failed to load optimizer.
+[INFO] loaded scheduler.
+[INFO] loaded scaler.
+[INFO] Trainer: ngp | 2025-03-08_23-14-33 | cuda | fp16 | data/video
+[INFO] #parameters: 1789121
+[INFO] Loading data/pretrained/ngp_kf.pth ...
+[INFO] loaded model.
+[INFO] load at epoch 66, global step 200706
+[WARN] Failed to load optimizer.
+[INFO] loaded scheduler.
+[INFO] loaded scaler.
+[INFO] Trainer: ngp | 2025-03-08_23-16-18 | cuda | fp16 | data/video
+[INFO] #parameters: 1789121
+[INFO] Loading data/pretrained/ngp_kf.pth ...
+[INFO] loaded model.
+[INFO] load at epoch 66, global step 200706
+[WARN] Failed to load optimizer.
+[INFO] loaded scheduler.
+[INFO] loaded scaler.
+[INFO] Trainer: ngp | 2025-03-08_23-25-07 | cuda | fp16 | data/video
+[INFO] #parameters: 1789121
+[INFO] Loading data/pretrained/ngp_kf.pth ...
+[INFO] loaded model.
+[INFO] load at epoch 66, global step 200706
+[WARN] Failed to load optimizer.
+[INFO] loaded scheduler.
+[INFO] loaded scaler.
+[INFO] Trainer: ngp | 2025-03-09_00-50-46 | cuda | fp16 | data/video
+[INFO] #parameters: 1789121
+[INFO] Loading data/pretrained/ngp_kf.pth ...
+[INFO] loaded model.
+[INFO] load at epoch 66, global step 200706
+[WARN] Failed to load optimizer.
+[INFO] loaded scheduler.
+[INFO] loaded scaler.
+[INFO] Trainer: ngp | 2025-03-09_09-43-53 | cuda | fp16 | data/video
+[INFO] #parameters: 1789121
+[INFO] Loading data/pretrained/ngp_kf.pth ...
+[INFO] loaded model.
+[INFO] load at epoch 66, global step 200706
+[WARN] Failed to load optimizer.
+[INFO] loaded scheduler.
+[INFO] loaded scaler.
+[INFO] Trainer: ngp | 2025-03-09_09-59-47 | cuda | fp16 | data/video
+[INFO] #parameters: 1789121
+[INFO] Loading data/pretrained/ngp_kf.pth ...
+[INFO] loaded model.
+[INFO] load at epoch 66, global step 200706
+[WARN] Failed to load optimizer.
+[INFO] loaded scheduler.
+[INFO] loaded scaler.
+[INFO] Trainer: ngp | 2025-03-09_10-03-38 | cuda | fp16 | data/video
+[INFO] #parameters: 1789121
+[INFO] Loading data/pretrained/ngp_kf.pth ...
+[INFO] loaded model.
+[INFO] load at epoch 66, global step 200706
+[WARN] Failed to load optimizer.
+[INFO] loaded scheduler.
+[INFO] loaded scaler.
+[INFO] Trainer: ngp | 2025-03-09_10-21-37 | cuda | fp16 | data/video
+[INFO] #parameters: 1789121
+[INFO] Loading data/pretrained/ngp_kf.pth ...
+[INFO] loaded model.
+[INFO] load at epoch 66, global step 200706
+[WARN] Failed to load optimizer.
+[INFO] loaded scheduler.
+[INFO] loaded scaler.
+[INFO] Trainer: ngp | 2025-03-09_10-30-54 | cuda | fp16 | data/video
+[INFO] #parameters: 1789121
+[INFO] Loading data/pretrained/ngp_kf.pth ...
+[INFO] loaded model.
+[INFO] load at epoch 66, global step 200706
+[WARN] Failed to load optimizer.
+[INFO] loaded scheduler.
+[INFO] loaded scaler.
+[INFO] Trainer: ngp | 2025-03-09_13-29-53 | cuda | fp16 | data/video
+[INFO] #parameters: 1789121
+[INFO] Loading data/pretrained/ngp_kf.pth ...
+[INFO] loaded model.
+[INFO] load at epoch 66, global step 200706
+[WARN] Failed to load optimizer.
+[INFO] loaded scheduler.
+[INFO] loaded scaler.
+[INFO] Trainer: ngp | 2025-03-09_22-27-02 | cuda | fp16 | data/video
+[INFO] #parameters: 1789121
+[INFO] Loading data/pretrained/ngp_kf.pth ...
+[INFO] loaded model.
+[INFO] load at epoch 66, global step 200706
+[WARN] Failed to load optimizer.
+[INFO] loaded scheduler.
+[INFO] loaded scaler.
+[INFO] Trainer: ngp | 2025-03-09_22-37-37 | cuda | fp16 | data/video
+[INFO] #parameters: 1789121
+[INFO] Loading data/pretrained/ngp_kf.pth ...
+[INFO] loaded model.
+[INFO] load at epoch 66, global step 200706
+[WARN] Failed to load optimizer.
+[INFO] loaded scheduler.
+[INFO] loaded scaler.
+[INFO] Trainer: ngp | 2025-03-10_09-28-28 | cuda | fp16 | data/video
+[INFO] #parameters: 1789121
+[INFO] Loading data/pretrained/ngp_kf.pth ...
+[INFO] loaded model.
+[INFO] load at epoch 66, global step 200706
+[WARN] Failed to load optimizer.
+[INFO] loaded scheduler.
+[INFO] loaded scaler.
+[INFO] Trainer: ngp | 2025-03-12_22-21-44 | cuda | fp16 | data/video
+[INFO] #parameters: 1789121
+[INFO] Loading data/pretrained/ngp_kf.pth ...
+[INFO] loaded model.
+[INFO] load at epoch 66, global step 200706
+[WARN] Failed to load optimizer.
+[INFO] loaded scheduler.
+[INFO] loaded scaler.
+[INFO] Trainer: ngp | 2025-03-13_10-08-27 | cuda | fp16 | data/video
+[INFO] #parameters: 1789121
+[INFO] Loading data/pretrained/ngp_kf.pth ...
+[INFO] loaded model.
+[INFO] load at epoch 66, global step 200706
+[WARN] Failed to load optimizer.
+[INFO] loaded scheduler.
+[INFO] loaded scaler.
+[INFO] Trainer: ngp | 2025-03-13_10-14-02 | cuda | fp16 | data/video
+[INFO] #parameters: 1789121
+[INFO] Loading data/pretrained/ngp_kf.pth ...
+[INFO] loaded model.
+[INFO] load at epoch 66, global step 200706
+[WARN] Failed to load optimizer.
+[INFO] loaded scheduler.
+[INFO] loaded scaler.
+[INFO] Trainer: ngp | 2025-03-13_14-05-11 | cuda | fp16 | data/video
+[INFO] #parameters: 1789121
+[INFO] Loading data/pretrained/ngp_kf.pth ...
+[INFO] loaded model.
+[INFO] load at epoch 66, global step 200706
+[WARN] Failed to load optimizer.
+[INFO] loaded scheduler.
+[INFO] loaded scaler.
+[INFO] Trainer: ngp | 2025-03-20_08-49-32 | cuda | fp16 | data/video
+[INFO] #parameters: 1789121
+[INFO] Loading data/pretrained/ngp_kf.pth ...
+[INFO] loaded model.
+[INFO] load at epoch 66, global step 200706
+[WARN] Failed to load optimizer.
+[INFO] loaded scheduler.
+[INFO] loaded scaler.
+[INFO] Trainer: ngp | 2025-03-20_13-49-56 | cuda | fp16 | data/video
+[INFO] #parameters: 1789121
+[INFO] Loading data/pretrained/ngp_kf.pth ...
+[INFO] loaded model.
+[INFO] load at epoch 66, global step 200706
+[WARN] Failed to load optimizer.
+[INFO] loaded scheduler.
+[INFO] loaded scaler.
+[INFO] Trainer: ngp | 2025-03-28_08-48-08 | cuda | fp16 | data/video
+[INFO] #parameters: 1789121
+[INFO] Loading data/pretrained/ngp_kf.pth ...
+[INFO] loaded model.
+[INFO] load at epoch 66, global step 200706
+[WARN] Failed to load optimizer.
+[INFO] loaded scheduler.
+[INFO] loaded scaler.
+[INFO] Trainer: ngp | 2025-03-30_14-07-33 | cuda | fp16 | data/1/video
+[INFO] #parameters: 1789121
+[INFO] Loading data/1/pretrained/ngp_kf.pth ...
+[INFO] loaded model.
+[INFO] load at epoch 66, global step 200706
+[WARN] Failed to load optimizer.
+[INFO] loaded scheduler.
+[INFO] loaded scaler.
+[INFO] Trainer: ngp | 2025-04-03_00-38-49 | cuda | fp16 | data/1/video
+[INFO] #parameters: 1789121
+[INFO] Loading data/1/pretrained/ngp_kf.pth ...
+[INFO] loaded model.
+[INFO] load at epoch 66, global step 200706
+[WARN] Failed to load optimizer.
+[INFO] loaded scheduler.
+[INFO] loaded scaler.
+[INFO] Trainer: ngp | 2025-04-03_19-38-28 | cuda | fp16 | data/1/video
+[INFO] #parameters: 1789121
+[INFO] Loading data/1/pretrained/ngp_kf.pth ...
+[INFO] loaded model.
+[INFO] load at epoch 66, global step 200706
+[WARN] Failed to load optimizer.
+[INFO] loaded scheduler.
+[INFO] loaded scaler.
+[INFO] Trainer: ngp | 2025-04-18_16-13-29 | cuda | fp16 | data/1/video
+[INFO] #parameters: 1789121
+[INFO] Loading data/1/pretrained/ngp_kf.pth ...
+[INFO] loaded model.
+[INFO] load at epoch 66, global step 200706
+[WARN] Failed to load optimizer.
+[INFO] loaded scheduler.
+[INFO] loaded scaler.
+[INFO] Trainer: ngp | 2025-10-29_21-14-08 | cuda | fp16 | data/1/video
+[INFO] #parameters: 1789121
+[INFO] Loading data/1/pretrained/ngp_kf.pth ...
+[INFO] loaded model.
+[INFO] load at epoch 66, global step 200706
+[WARN] Failed to load optimizer.
+[INFO] loaded scheduler.
+[INFO] loaded scaler.
+[INFO] Trainer: ngp | 2026-04-14_12-54-13 | cuda | fp16 | data/1/video
+[INFO] #parameters: 1789121
+[INFO] Loading data/1/pretrained/ngp_kf.pth ...
+[INFO] loaded model.
+[INFO] load at epoch 66, global step 200706
+[WARN] Failed to load optimizer.
+[INFO] loaded scheduler.
+[INFO] loaded scaler.
+[INFO] Trainer: ngp | 2026-04-14_13-23-20 | cuda | fp16 | data/1/video
+[INFO] #parameters: 1789121
+[INFO] Loading data/1/pretrained/ngp_kf.pth ...
+[INFO] loaded model.
+[INFO] load at epoch 66, global step 200706
+[WARN] Failed to load optimizer.
+[INFO] loaded scheduler.
+[INFO] loaded scaler.
+[INFO] Trainer: ngp | 2026-04-14_13-24-18 | cuda | fp16 | data/1/video
+[INFO] #parameters: 1789121
+[INFO] Loading data/1/pretrained/ngp_kf.pth ...
+[INFO] loaded model.
+[INFO] load at epoch 66, global step 200706
+[WARN] Failed to load optimizer.
+[INFO] loaded scheduler.
+[INFO] loaded scaler.
+[INFO] Trainer: ngp | 2026-04-14_13-54-02 | cuda | fp16 | data/1/video
+[INFO] #parameters: 1789121
+[INFO] Loading data/1/pretrained/ngp_kf.pth ...
+[INFO] loaded model.
+[INFO] load at epoch 66, global step 200706
+[WARN] Failed to load optimizer.
+[INFO] loaded scheduler.
+[INFO] loaded scaler.
+[INFO] Trainer: ngp | 2026-04-14_14-05-31 | cuda | fp16 | data/1/video
+[INFO] #parameters: 1789121
+[INFO] Loading data/1/pretrained/ngp_kf.pth ...
+[INFO] loaded model.
+[INFO] load at epoch 66, global step 200706
+[WARN] Failed to load optimizer.
+[INFO] loaded scheduler.
+[INFO] loaded scaler.
+[INFO] Trainer: ngp | 2026-04-14_14-10-07 | cuda | fp16 | data/1/video
+[INFO] #parameters: 1789121
+[INFO] Loading data/1/pretrained/ngp_kf.pth ...
+[INFO] loaded model.
+[INFO] load at epoch 66, global step 200706
+[WARN] Failed to load optimizer.
+[INFO] loaded scheduler.
+[INFO] loaded scaler.
+[INFO] Trainer: ngp | 2026-04-14_14-15-00 | cuda | fp16 | data/1/video
+[INFO] #parameters: 1789121
+[INFO] Loading data/1/pretrained/ngp_kf.pth ...
+[INFO] loaded model.
+[INFO] load at epoch 66, global step 200706
+[WARN] Failed to load optimizer.
+[INFO] loaded scheduler.
+[INFO] loaded scaler.
+[INFO] Trainer: ngp | 2026-04-14_14-23-50 | cuda | fp16 | data/1/video
+[INFO] #parameters: 1789121
+[INFO] Loading data/1/pretrained/ngp_kf.pth ...
+[INFO] loaded model.
+[INFO] load at epoch 66, global step 200706
+[WARN] Failed to load optimizer.
+[INFO] loaded scheduler.
+[INFO] loaded scaler.
+[INFO] Trainer: ngp | 2026-04-14_14-56-39 | cuda | fp16 | data/1/video
+[INFO] #parameters: 1789121
+[INFO] Loading data/1/pretrained/ngp_kf.pth ...
+[INFO] loaded model.
+[INFO] load at epoch 66, global step 200706
+[WARN] Failed to load optimizer.
+[INFO] loaded scheduler.
+[INFO] loaded scaler.
+[INFO] Trainer: ngp | 2026-04-14_14-58-37 | cuda | fp16 | data/1/video
+[INFO] #parameters: 1789121
+[INFO] Loading data/1/pretrained/ngp_kf.pth ...
+[INFO] loaded model.
+[INFO] load at epoch 66, global step 200706
+[WARN] Failed to load optimizer.
+[INFO] loaded scheduler.
+[INFO] loaded scaler.
+[INFO] Trainer: ngp | 2026-04-14_16-50-30 | cuda | fp16 | data/1/video
+[INFO] #parameters: 1789121
+[INFO] Loading data/1/pretrained/ngp_kf.pth ...
+[INFO] loaded model.
+[INFO] load at epoch 66, global step 200706
+[WARN] Failed to load optimizer.
+[INFO] loaded scheduler.
+[INFO] loaded scaler.
+[INFO] Trainer: ngp | 2026-04-15_11-32-54 | cuda | fp16 | data/1/video
+[INFO] #parameters: 1789121
+[INFO] Loading data/1/pretrained/ngp_kf.pth ...
+[INFO] loaded model.
+[INFO] load at epoch 66, global step 200706
+[WARN] Failed to load optimizer.
+[INFO] loaded scheduler.
+[INFO] loaded scaler.
+[INFO] Trainer: ngp | 2026-04-15_11-46-26 | cuda | fp16 | data/1/video
+[INFO] #parameters: 1789121
+[INFO] Loading data/1/pretrained/ngp_kf.pth ...
+[INFO] loaded model.
+[INFO] load at epoch 66, global step 200706
+[WARN] Failed to load optimizer.
+[INFO] loaded scheduler.
+[INFO] loaded scaler.
+[INFO] Trainer: ngp | 2026-04-15_13-02-40 | cuda | fp16 | data/1/video
+[INFO] #parameters: 1789121
+[INFO] Loading data/1/pretrained/ngp_kf.pth ...
+[INFO] loaded model.
+[INFO] load at epoch 66, global step 200706
+[WARN] Failed to load optimizer.
+[INFO] loaded scheduler.
+[INFO] loaded scaler.
+[INFO] Trainer: ngp | 2026-04-15_13-13-58 | cuda | fp16 | data/1/video
+[INFO] #parameters: 1789121
+[INFO] Loading data/1/pretrained/ngp_kf.pth ...
+[INFO] loaded model.
+[INFO] load at epoch 66, global step 200706
+[WARN] Failed to load optimizer.
+[INFO] loaded scheduler.
+[INFO] loaded scaler.
+[INFO] Trainer: ngp | 2026-04-15_13-43-30 | cuda | fp16 | data/1/video
+[INFO] #parameters: 1789121
+[INFO] Loading data/1/pretrained/ngp_kf.pth ...
+[INFO] loaded model.
+[INFO] load at epoch 66, global step 200706
+[WARN] Failed to load optimizer.
+[INFO] loaded scheduler.
+[INFO] loaded scaler.
+[INFO] Trainer: ngp | 2026-04-15_13-48-19 | cuda | fp16 | data/1/video
+[INFO] #parameters: 1789121
+[INFO] Loading data/1/pretrained/ngp_kf.pth ...
+[INFO] loaded model.
+[INFO] load at epoch 66, global step 200706
+[WARN] Failed to load optimizer.
+[INFO] loaded scheduler.
+[INFO] loaded scaler.
+[INFO] Trainer: ngp | 2026-04-15_13-53-24 | cuda | fp16 | data/1/video
+[INFO] #parameters: 1789121
+[INFO] Loading data/1/pretrained/ngp_kf.pth ...
+[INFO] loaded model.
+[INFO] load at epoch 66, global step 200706
+[WARN] Failed to load optimizer.
+[INFO] loaded scheduler.
+[INFO] loaded scaler.
+[INFO] Trainer: ngp | 2026-04-15_14-42-57 | cuda | fp16 | data/1/video
+[INFO] #parameters: 1789121
+[INFO] Loading data/1/pretrained/ngp_kf.pth ...
+[INFO] loaded model.
+[INFO] load at epoch 66, global step 200706
+[WARN] Failed to load optimizer.
+[INFO] loaded scheduler.
+[INFO] loaded scaler.
+[INFO] Trainer: ngp | 2026-04-15_15-05-17 | cuda | fp16 | data/1/video
+[INFO] #parameters: 1789121
+[INFO] Loading data/1/pretrained/ngp_kf.pth ...
+[INFO] loaded model.
+[INFO] load at epoch 66, global step 200706
+[WARN] Failed to load optimizer.
+[INFO] loaded scheduler.
+[INFO] loaded scaler.
+[INFO] Trainer: ngp | 2026-04-15_16-02-39 | cuda | fp16 | data/1/video
+[INFO] #parameters: 1789121
+[INFO] Loading data/1/pretrained/ngp_kf.pth ...
+[INFO] loaded model.
+[INFO] load at epoch 66, global step 200706
+[WARN] Failed to load optimizer.
+[INFO] loaded scheduler.
+[INFO] loaded scaler.
