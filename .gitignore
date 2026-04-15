@@ -1,0 +1,85 @@
+# Python bytecode / cache
+__pycache__/
+*.py[cod]
+*$py.class
+
+# C extensions
+*.so
+*.pyd
+*.dll
+
+# Virtual environments
+.venv/
+venv/
+ENV/
+env/
+
+# Environment / secrets
+.env
+.env.*
+*.pem
+*.key
+*.p12
+*.pfx
+credentials*.json
+secrets*.json
+
+# Logs & local runtime files
+*.log
+logs/
+*.pid
+*.seed
+
+# Jupyter / IPython
+.ipynb_checkpoints/
+.python_history
+
+# Build / distribution
+build/
+dist/
+*.egg-info/
+.eggs/
+pip-wheel-metadata/
+
+# Test / coverage
+.pytest_cache/
+.coverage
+coverage.xml
+htmlcov/
+
+# Type checker / linter caches
+.mypy_cache/
+.ruff_cache/
+.pytype/
+.pyre/
+
+# IDEs
+.vscode/
+.idea/
+
+# OS files
+Thumbs.db
+Desktop.ini
+.DS_Store
+
+# ML / experiment artifacts (common)
+runs/
+wandb/
+lightning_logs/
+checkpoints/
+*.ckpt
+*.pt
+*.pth
+*.onnx
+*.tflite
+
+# Media / large outputs (adjust to your needs)
+outputs/
+output/
+tmp/
+temp/
+
+# Data directories (often large/private) — keep code, ignore datasets by default
+# data/
+# datasets/
+

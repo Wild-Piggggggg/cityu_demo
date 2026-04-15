@@ -1,100 +1,178 @@
-Real time interactive streaming digital human， realize audio video synchronous dialogue. It can basically achieve commercial effects.  
-实时交互流式数字人，实现音视频同步对话。基本可以达到商用效果
+# CityU Human（实时交互数字人 / 英语口语教练）
 
-[ernerf效果](https://www.bilibili.com/video/BV1PM4m1y7Q2/)  [musetalk效果](https://www.bilibili.com/video/BV1gm421N7vQ/)  [wav2lip效果](https://www.bilibili.com/video/BV1Bw4m1e74P/)
+本项目基于 **LiveTalking** 改造：在“实时音视频数字人（WebRTC/RTMP/推流）”能力之上，增加了**英语口语教练**相关能力（文本对话、语音识别 STT、Qwen/DashScope LLM 流式回复、可打断播报），用于课堂/演示/交互式口语练习等场景。
 
-## 为避免与3d数字人混淆，原项目metahuman-stream改名为livetalking，原有链接地址继续可用
+- **支持的数字人模型**：`ernerf` / `musetalk` / `wav2lip` / `ultralight`
+- **交互方式**：浏览器 WebRTC、RTMP、WHIP/推流（见 `app.py --transport`）
+- **英语口语教练**：
+  - Web 端录音 → 服务器 `ffmpeg` 转码 → `speech_recognition`（Google Web Speech API）英文 STT → 英语教练 LLM → 数字人播报（`/voice_chat`）
+  - 文本对话接口（`/human`，`type=chat` 会调用 Qwen 流式输出并分句驱动数字人）
 
-## News
-- 2024.12.8 完善多并发，显存不随并发数增加
-- 2024.12.21 添加wav2lip、musetalk模型预热，解决第一次推理卡顿问题。感谢@heimaojinzhangyz
-- 2024.12.28 添加数字人模型Ultralight-Digital-Human。 感谢@lijihua2017
+> 说明：仓库里包含多个上游子模块（`ernerf/`、`wav2lip/`、`musetalk/` 等），各自也有 README。此 README 以**跑通本项目**为主。
 
-## Features
-1. 支持多种数字人模型: ernerf、musetalk、wav2lip、Ultralight-Digital-Human
-2. 支持声音克隆
-3. 支持数字人说话被打断
-4. 支持全身视频拼接
-5. 支持rtmp和webrtc
-6. 支持视频编排：不说话时播放自定义视频
-7. 支持多并发
+## 演示页面入口
 
-## 1. Installation
+项目内置了多个前端示例页面，默认服务会把 `web/` 作为静态目录：
 
-Tested on Ubuntu 20.04, Python3.10, Pytorch 1.12 and CUDA 11.3
+- WebRTC 主入口：`web/webrtcapi.html`
+- CityU 定制页（如有）：`web/webrtcapi_cityu.html`
+- ASR 示例：`web/webrtcapi-asr.html`、`web/asr/index.html`
+- 推流/rtcpush 示例：`web/rtcpushapi.html`
 
-### 1.1 Install dependency
+启动服务后控制台会打印实际访问地址（形如 `http://localhost:8010/webrtcapi.html`）。
+
+## 环境要求
+
+- **Python**：建议 3.10+（你当前环境为 3.11 也可用，依赖较重时可能需要按报错微调）
+- **GPU（推荐）**：NVIDIA CUDA（不同模型/推理速度差异很大）
+- **ffmpeg（必需）**：语音接口 `/voice_chat` 会调用系统 `ffmpeg` 做转码
+- **浏览器**：Chrome/Edge（用于 WebRTC）
+
+## 快速开始（Windows 10 / PowerShell）
+
+### 1）创建 Conda 环境并安装依赖
+
+在项目根目录执行：
 
 ```bash
-conda create -n nerfstream python=3.10
-conda activate nerfstream
-#如果cuda版本不为11.3(运行nvidia-smi确认版本)，根据<https://pytorch.org/get-started/previous-versions/>安装对应版本的pytorch 
-conda install pytorch==1.12.1 torchvision==0.13.1 cudatoolkit=11.3 -c pytorch
+conda create -n cityu_human python=3.10 -y
+conda activate cityu_human
+python -m pip install -U pip
 pip install -r requirements.txt
-#如果不训练ernerf模型，不需要安装下面的库
-pip install "git+https://github.com/facebookresearch/pytorch3d.git"
-pip install tensorflow-gpu==2.8.0
-pip install --upgrade "protobuf<=3.20.1"
-``` 
-安装常见问题[FAQ](https://livetalking-doc.readthedocs.io/en/latest/faq.html)  
-linux cuda环境搭建可以参考这篇文章 https://zhuanlan.zhihu.com/p/674972886
+```
 
+> 如果你有 CUDA，建议先按 PyTorch 官方说明安装与你本机 CUDA 匹配的 `torch/torchvision`，再安装 `requirements.txt` 其余依赖；否则可能出现 CUDA/torch 版本不匹配。
 
-## 2. Quick Start
-默认采用ernerf模型，webrtc推流到srs  
-### 2.1 运行srs
+### 2）安装 ffmpeg
+
+确保命令行可执行：
+
 ```bash
-export CANDIDATE='<服务器外网ip>'  #如果srs与浏览器访问在同一层级内网，不需要执行这步
-docker run --rm --env CANDIDATE=$CANDIDATE \
-  -p 1935:1935 -p 8080:8080 -p 1985:1985 -p 8000:8000/udp \
-  registry.cn-hangzhou.aliyuncs.com/ossrs/srs:5 \
-  objs/srs -c conf/rtc.conf
-```
-备注：<font color=red>服务端需要开放端口 tcp:8000,8010,1985; udp:8000</font>
-
-### 2.2 启动数字人：
-
-```python
-python app.py
+ffmpeg -version
 ```
 
-如果访问不了huggingface，在运行前
+（Windows 建议安装后把 `ffmpeg.exe` 加到 `PATH`。）
+
+### 3）配置 LLM Key（DashScope/Qwen）
+
+本项目调用 DashScope 兼容 OpenAI 的接口，默认从环境变量读取：
+
+- `DASHSCOPE_API_KEY`：你的 DashScope Key
+
+PowerShell 示例：
+
+```powershell
+$env:DASHSCOPE_API_KEY="你的DashScopeKey"
 ```
-export HF_ENDPOINT=https://hf-mirror.com
+
+> 建议仅用环境变量，不要把 Key 写进代码/提交到 GitHub。
+
+### 4）启动服务
+
+默认 WebRTC：
+
+```bash
+python app.py --transport webrtc --listenport 8010
 ```
 
-用浏览器打开http://serverip:8010/rtcpushapi.html, 在文本框输入任意文字，提交。数字人播报该段文字  
+然后打开：
 
+- `http://localhost:8010/webrtcapi.html`（或根据控制台提示的页面）
 
-## 3. More Usage
-使用说明: <https://livetalking-doc.readthedocs.io/>
-  
-## 4. Docker Run  
-不需要前面的安装，直接运行。
+## 快速开始（Linux / Ubuntu 20.04+）
+
+> 说明：Linux 下整体体验通常更稳定（CUDA/驱动/依赖更友好）。以下以 Ubuntu 为例，其他发行版可替换包管理器命令。
+
+### 1）安装系统依赖（ffmpeg 等）
+
+```bash
+sudo apt update
+sudo apt install -y ffmpeg
+ffmpeg -version
 ```
-docker run --gpus all -it --network=host --rm registry.cn-beijing.aliyuncs.com/codewithgpu2/lipku-metahuman-stream:vjo1Y6NJ3N
+
+### 2）创建 Conda 环境并安装 Python 依赖
+
+在项目根目录执行：
+
+```bash
+conda create -n cityu_human python=3.10 -y
+conda activate cityu_human
+python -m pip install -U pip
+pip install -r requirements.txt
 ```
-代码在/root/metahuman-stream，先git pull拉一下最新代码，然后执行命令同第2、3步 
 
-提供如下镜像
-- autodl镜像: <https://www.codewithgpu.com/i/lipku/metahuman-stream/base>   
-[autodl教程](https://livetalking-doc.readthedocs.io/en/latest/autodl/README.html)
-- ucloud镜像: <https://www.compshare.cn/images-detail?ImageID=compshareImage-16ktl2kxwjef&ImageType=Community&referral_code=3XW3852OBmnD089hMMrtuU&ytag=lipku_github>  
-可以开放任意端口，不需要另外部署srs服务.  
-[ucloud教程](https://livetalking-doc.readthedocs.io/en/latest/ucloud/ucloud.html) 
+> 如果你使用 NVIDIA GPU，请先按 PyTorch 官方说明安装与你 CUDA 版本匹配的 `torch/torchvision`，再安装 `requirements.txt` 其余依赖，避免 CUDA/torch 不匹配导致无法调用 GPU。
 
+### 3）配置 LLM Key（DashScope/Qwen）
 
-## 5. TODO
-- [x] 添加chatgpt实现数字人对话
-- [x] 声音克隆
-- [x] 数字人静音时用一段视频代替
-- [x] MuseTalk
-- [x] Wav2Lip
-- [x] Ultralight-Digital-Human
+```bash
+export DASHSCOPE_API_KEY="你的DashScopeKey"
+```
 
----
-如果本项目对你有帮助，帮忙点个star。也欢迎感兴趣的朋友一起来完善该项目.
-* 知识星球: https://t.zsxq.com/7NMyO 沉淀高质量常见问题、最佳实践经验、问题解答  
-* 微信公众号：数字人技术  
-![](https://mmbiz.qpic.cn/sz_mmbiz_jpg/l3ZibgueFiaeyfaiaLZGuMGQXnhLWxibpJUS2gfs8Dje6JuMY8zu2tVyU9n8Zx1yaNncvKHBMibX0ocehoITy5qQEZg/640?wxfrom=12&tp=wxpic&usePicPrefetch=1&wx_fmt=jpeg&amp;from=appmsg)  
+### 4）启动服务并访问
 
+```bash
+python app.py --transport webrtc --listenport 8010
+```
+
+在本机浏览器打开：
+
+- `http://localhost:8010/webrtcapi.html`
+
+如果是远程 Linux 服务器（云主机）：
+
+- **安全组/防火墙**：放通 `--listenport` 对应端口（默认 8010）
+- **浏览器访问**：用 `http://<服务器IP>:8010/webrtcapi.html`
+
+## 关键接口（后端）
+
+后端基于 `aiohttp` 提供接口（代码在 `app.py`）：
+
+- `POST /offer`：建立 WebRTC（浏览器 SDP 交换）
+- `POST /human`：文本驱动数字人
+  - `type=echo`：直接播报文本
+  - `type=chat`：调用 LLM（Qwen）生成回复并分句推入数字人队列
+- `POST /voice_chat`：**【英语口语教练】**上传浏览器录音（WebM），服务端 STT 后生成教练回复并驱动数字人播报
+- `POST /is_speaking`：查询数字人是否还在说话（前端可轮询）
+
+## 模型选择与常用参数
+
+运行时可切换模型：
+
+```bash
+python app.py --model ernerf
+python app.py --model musetalk
+python app.py --model wav2lip
+python app.py --model ultralight
+```
+
+其他常见参数（部分）：
+
+- `--listenport`：HTTP 服务端口（默认 8010）
+- `--max_session`：并发 session 数
+- `--tts`：TTS 方案（默认 `edgetts`，见 `app.py` 参数）
+
+## 目录结构（简版）
+
+- `app.py`：主服务入口（WebRTC + HTTP API + 英语口语教练语音接口）
+- `web/`：前端页面（WebRTC/推流/ASR 示例）
+- `llm/`：LLM 相关封装与英语教练逻辑
+- `ernerf/`、`wav2lip/`、`musetalk/`、`ultralight/`：各数字人模型子模块
+- `models/`、`data/`：模型权重与示例数据（实际内容因环境而异）
+
+## 常见问题
+
+- **页面打不开/无视频**：确认端口 `--listenport` 未被占用；浏览器允许摄像头/麦克风权限；优先用 Chrome/Edge。
+- **`/voice_chat` 报错找不到 ffmpeg**：先把 ffmpeg 加入 `PATH`，确保 `ffmpeg -version` 可执行。
+- **依赖安装失败**：优先确认 `torch`/CUDA 版本匹配；然后再装其余依赖。部分库在 Windows 可能需要对应的 wheel 或编译工具链。
+
+## 打包（可选）
+
+提供了 `build.bat` 用于 PyInstaller 打包（需要你先准备好 conda 环境并按脚本修改环境名）。
+
+## 致谢
+
+- 上游项目：LiveTalking（原作者/社区贡献者）
+- 语音识别：`speech_recognition`（Google Web Speech API）
+- WebRTC：`aiortc`
