@@ -29,7 +29,7 @@ import numpy as np
 
 AUDIO_PTIME = 0.020  # 20ms audio packetization
 VIDEO_CLOCK_RATE = 90000
-VIDEO_PTIME = 1 /30  # 30fps
+VIDEO_PTIME = 1 / 25  # 【Zegao】改为 25fps，与渲染循环实际帧率一致，避免时间戳漂移
 VIDEO_TIME_BASE = fractions.Fraction(1, VIDEO_CLOCK_RATE)
 SAMPLE_RATE = 16000
 AUDIO_TIME_BASE = fractions.Fraction(1, SAMPLE_RATE)
@@ -63,6 +63,11 @@ class PlayerStreamTrack(MediaStreamTrack):
     
     _start: float
     _timestamp: int
+
+    def set_start_time(self, t: float) -> None:
+        """【Zegao】由 HumanPlayer 统一设置音视频起始时间，保证两路时钟对齐"""
+        self._start = t
+        self._timestamp = 0
 
     async def next_timestamp(self) -> Tuple[int, fractions.Fraction]:
         if self.readyState != "live":
@@ -163,6 +168,10 @@ class HumanPlayer:
 
         self.__audio = PlayerStreamTrack(self, kind="audio")
         self.__video = PlayerStreamTrack(self, kind="video")
+        # 【Zegao】音视频共享同一起始时钟，消除因各自 lazy init 带来的偏移
+        _shared_start = time.time()
+        self.__audio.set_start_time(_shared_start)
+        self.__video.set_start_time(_shared_start)
 
         self.__container = nerfreal
 

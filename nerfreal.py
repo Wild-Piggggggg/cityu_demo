@@ -81,20 +81,26 @@ def load_model(opt):
 
     criterion = torch.nn.MSELoss(reduction='none')
     metrics = [] # use no metric in GUI for faster initialization...
-    print(model)
     trainer = Trainer('ngp', opt, model, device=device, workspace=opt.workspace, criterion=criterion, fp16=opt.fp16, metrics=metrics, use_checkpoint=opt.ckpt)
 
     test_loader = NeRFDataset_Test(opt, device=device).dataloader()
     model.aud_features = test_loader._data.auds
     model.eye_areas = test_loader._data.eye_area
 
-    print(f'[INFO] loading ASR model {opt.asr_model}...')
+    # 【Zegao】优先使用本地缓存的 ASR 模型，避免网络访问；本地不存在时走 HF 镜像
+    _local_asr = os.path.join(os.path.dirname(__file__), 'models', 'asr_model')
+    asr_model_path = _local_asr if os.path.isdir(_local_asr) else opt.asr_model
+    if asr_model_path == opt.asr_model:
+        for _proxy_key in ('ALL_PROXY', 'all_proxy', 'HTTPS_PROXY', 'https_proxy', 'HTTP_PROXY', 'http_proxy'):
+            os.environ.pop(_proxy_key, None)
+        os.environ.setdefault('HF_ENDPOINT', 'https://hf-mirror.com')
+    print(f'[INFO] loading ASR model {asr_model_path}...')
     if 'hubert' in opt.asr_model:
-        audio_processor = Wav2Vec2Processor.from_pretrained(opt.asr_model)
-        audio_model = HubertModel.from_pretrained(opt.asr_model).to(device) 
+        audio_processor = Wav2Vec2Processor.from_pretrained(asr_model_path)
+        audio_model = HubertModel.from_pretrained(asr_model_path).to(device) 
     else:   
-        audio_processor = AutoProcessor.from_pretrained(opt.asr_model)
-        audio_model = AutoModelForCTC.from_pretrained(opt.asr_model).to(device)
+        audio_processor = AutoProcessor.from_pretrained(asr_model_path)
+        audio_model = AutoModelForCTC.from_pretrained(asr_model_path).to(device)
     return trainer,test_loader,audio_processor,audio_model
 
 def load_avatar(opt):
@@ -376,6 +382,10 @@ class NeRFReal(BaseReal):
                 if video_track._queue.qsize()>=5:
                     #print('sleep qsize=',video_track._queue.qsize())
                     time.sleep(0.04*video_track._queue.qsize()*0.8)
+                # 【Zegao】音频队列同样限速，防止 TTS 音频帧过早堆积导致音画不同步
+                # 保持音频队列不超过视频队列的 2 倍（每帧 2 音频帧对应 1 视频帧）
+                if audio_track._queue.qsize() >= max(10, video_track._queue.qsize() * 2 + 4):
+                    time.sleep(0.02 * (audio_track._queue.qsize() // 2))
         print('nerfreal thread stop')
             
             

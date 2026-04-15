@@ -43,6 +43,8 @@ import random
 
 import shutil
 import asyncio
+import socket
+import ssl
 import torch
 import subprocess
 import tempfile
@@ -590,8 +592,24 @@ if __name__ == '__main__':
 
     parser.add_argument('--max_session', type=int, default=1)  #multi session count
     parser.add_argument('--listenport', type=int, default=8010)
+    parser.add_argument('--serverip', type=str, default='', help='server IP shown to clients; auto-detected if empty')
+    parser.add_argument('--ssl_cert', type=str, default='', help='path to SSL cert.pem for HTTPS (enables mic in browser)')
+    parser.add_argument('--ssl_key',  type=str, default='', help='path to SSL key.pem for HTTPS')
 
     opt = parser.parse_args()
+
+    # 【Zegao】自动探测本机 IP，用于替换配置中的 localhost/127.0.0.1
+    if not opt.serverip:
+        try:
+            _s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+            _s.connect(('8.8.8.8', 80))
+            opt.serverip = _s.getsockname()[0]
+            _s.close()
+        except Exception:
+            opt.serverip = '127.0.0.1'
+    opt.push_url   = opt.push_url.replace('localhost', opt.serverip).replace('127.0.0.1', opt.serverip)
+    opt.TTS_SERVER = opt.TTS_SERVER.replace('localhost', opt.serverip).replace('127.0.0.1', opt.serverip)
+
     #app.config.from_object(opt)
     #print(app.config)
     opt.customopt = []
@@ -680,12 +698,23 @@ if __name__ == '__main__':
         pagename='echoapi.html'
     elif opt.transport=='rtcpush':
         pagename='rtcpushapi.html'
-    print('start http server; http://localhost:'+str(opt.listenport)+'/'+pagename)
+    # 【Zegao】SSL 支持：证书存在时自动启用 HTTPS，解决浏览器麦克风权限问题
+    _ssl_ctx = None
+    _scheme  = 'http'
+    _default_cert = os.path.join(os.path.dirname(__file__), 'ssl', 'cert.pem')
+    _default_key  = os.path.join(os.path.dirname(__file__), 'ssl', 'key.pem')
+    _cert = opt.ssl_cert or (_default_cert if os.path.exists(_default_cert) else '')
+    _key  = opt.ssl_key  or (_default_key  if os.path.exists(_default_key)  else '')
+    if _cert and _key:
+        _ssl_ctx = ssl.SSLContext(ssl.PROTOCOL_TLS_SERVER)
+        _ssl_ctx.load_cert_chain(_cert, _key)
+        _scheme = 'https'
+    print(f'start http server; {_scheme}://{opt.serverip}:{opt.listenport}/{pagename}')
     def run_server(runner):
         loop = asyncio.new_event_loop()
         asyncio.set_event_loop(loop)
         loop.run_until_complete(runner.setup())
-        site = web.TCPSite(runner, '0.0.0.0', opt.listenport)
+        site = web.TCPSite(runner, '0.0.0.0', opt.listenport, ssl_context=_ssl_ctx)
         loop.run_until_complete(site.start())
         if opt.transport=='rtcpush':
             for k in range(opt.max_session):

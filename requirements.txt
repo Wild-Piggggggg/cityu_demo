@@ -52,3 +52,5 @@ trimesh
 webdriver-manager
 websockets
 websockets-proxy
+httpx[socks]
+ninja
