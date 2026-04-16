@@ -34,7 +34,7 @@ import torch.multiprocessing as mp
 from aiohttp import web
 import aiohttp
 import aiohttp_cors
-from aiortc import RTCPeerConnection, RTCSessionDescription
+from aiortc import RTCPeerConnection, RTCSessionDescription, RTCConfiguration, RTCIceServer
 from aiortc.rtcrtpsender import RTCRtpSender
 from webrtc import HumanPlayer
 
@@ -117,6 +117,48 @@ def llm_response(message,nerfreal):
 #####webrtc###############################
 pcs = set()
 
+def _parse_ice_servers(ice_servers: str):
+    """
+    Parse a comma-separated ICE server list into aiortc RTCIceServer objects.
+    Supports:
+      - stun:stun.example.com:3478
+      - turn:turn.example.com:3478?transport=udp
+      - turn:... with credentials using the form:
+          turn:host:port?transport=udp|tcp|tls|username=USER&credential=PASS
+    """
+    servers = []
+    if not ice_servers:
+        return servers
+
+    for raw in [x.strip() for x in ice_servers.split(",")]:
+        if not raw:
+            continue
+        # Optional inline credentials encoded in query string
+        # Example: turn:host:3478?transport=tcp&username=u&credential=p
+        username = None
+        credential = None
+        urls = raw
+        if "?" in raw:
+            base, qs = raw.split("?", 1)
+            urls = raw  # keep full URL including query (transport)
+            for kv in qs.split("&"):
+                if "=" not in kv:
+                    continue
+                k, v = kv.split("=", 1)
+                if k == "username":
+                    username = v
+                elif k in ("credential", "password", "pass"):
+                    credential = v
+        servers.append(RTCIceServer(urls=[urls], username=username, credential=credential))
+    return servers
+
+def _rtc_configuration_from_opt():
+    # 【Zegao】服务端也需要 STUN/TURN 才能在 NAT/防火墙环境下生成可达候选地址
+    ice_servers = _parse_ice_servers(getattr(opt, "ice_servers", ""))
+    if ice_servers:
+        return RTCConfiguration(iceServers=ice_servers)
+    return RTCConfiguration()
+
 def randN(N):
     '''生成长度为 N的随机数 '''
     min = pow(10, N - 1)
@@ -154,7 +196,7 @@ async def offer(request):
     nerfreal = await asyncio.get_event_loop().run_in_executor(None, build_nerfreal,sessionid)
     nerfreals[sessionid] = nerfreal
     
-    pc = RTCPeerConnection()
+    pc = RTCPeerConnection(configuration=_rtc_configuration_from_opt())
     pcs.add(pc)
 
     @pc.on("connectionstatechange")
@@ -167,6 +209,10 @@ async def offer(request):
         if pc.connectionState == "closed":
             pcs.discard(pc)
             del nerfreals[sessionid]
+
+    @pc.on("iceconnectionstatechange")
+    async def on_iceconnectionstatechange():
+        print("ICE connection state is %s" % pc.iceConnectionState)
 
     player = HumanPlayer(nerfreals[sessionid])
     audio_sender = pc.addTrack(player.audio)
@@ -429,7 +475,7 @@ async def run(push_url,sessionid):
     nerfreal = await asyncio.get_event_loop().run_in_executor(None, build_nerfreal,sessionid)
     nerfreals[sessionid] = nerfreal
 
-    pc = RTCPeerConnection()
+    pc = RTCPeerConnection(configuration=_rtc_configuration_from_opt())
     pcs.add(pc)
 
     @pc.on("connectionstatechange")
@@ -595,6 +641,12 @@ if __name__ == '__main__':
     parser.add_argument('--serverip', type=str, default='', help='server IP shown to clients; auto-detected if empty')
     parser.add_argument('--ssl_cert', type=str, default='', help='path to SSL cert.pem for HTTPS (enables mic in browser)')
     parser.add_argument('--ssl_key',  type=str, default='', help='path to SSL key.pem for HTTPS')
+    parser.add_argument(
+        '--ice_servers',
+        type=str,
+        default='stun:stun.cloudflare.com:3478,stun:stun.l.google.com:19302',
+        help='Comma-separated ICE servers for aiortc, e.g. "stun:stun.cloudflare.com:3478,turn:turn.example.com:3478?transport=tcp&username=u&credential=p"',
+    )
 
     opt = parser.parse_args()
 

@@ -173,7 +173,9 @@ python app.py --model ultralight
 ## 常见问题
 
 - **页面打不开/无视频**：确认端口 `--listenport` 未被占用；浏览器允许摄像头/麦克风权限；优先用 Chrome/Edge。
+- **能打开页面但视频黑屏（尤其是用 SSH 端口转发访问）**：WebRTC 的媒体流是端到端 UDP/DTLS 直连，**不会走 SSH `-L`/`-R` 的 TCP 隧道**；因此“信令 HTTP 能通”不等于“媒体能通”。解决思路：1）用公网 IP/域名直连服务器，并在防火墙/安全组放通 WebRTC 所需 UDP（以及 `--listenport` 对应的 TCP）；2）在受限网络/NAT 环境下配置 TURN（推荐走 443/TCP 或 443/TLS），并用 `--ice_servers` 指定可用的 STUN/TURN（`app.py` 默认已带 `stun:stun.cloudflare.com:3478`）。
 - **`/voice_chat` 报错找不到 ffmpeg**：先把 ffmpeg 加入 `PATH`，确保 `ffmpeg -version` 可执行。
+- **启用 speaking 后一直卡在 `Processing...`**：`/voice_chat` 默认使用 `speech_recognition` 的 **Google Web Speech API** 做英文 STT，该能力对网络环境有要求——需要你的**服务器或本地**具备可用的出网能力，或开启**特定网络环境的节点/代理**以访问 Google 语音服务。若网络不满足，后端常见日志为 `Google STT service error` / `Network is unreachable`，前端就会停留在 `processing` 状态。解决思路：配置可访问 Google 的网络节点/代理；或将 STT 替换为本地离线方案（如 Whisper/Vosk）/自建 ASR 服务。
 - **依赖安装失败**：优先确认 `torch`/CUDA 版本匹配；然后再装其余依赖。部分库在 Windows 可能需要对应的 wheel 或编译工具链。
 
 ---
