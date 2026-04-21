@@ -88,6 +88,10 @@ function start() {
         const username = (getEl('turn-user') && getEl('turn-user').value.trim()) ? getEl('turn-user').value.trim() : '';
         const credential = (getEl('turn-pass') && getEl('turn-pass').value.trim()) ? getEl('turn-pass').value.trim() : '';
 
+        if (!username || !credential) {
+            alert('TURN 已勾选，但未填写 Username/Password（coturn 开启鉴权时必须）。请先填写后再点击 Start WebRTC。');
+            getEl('use-turn').checked = false;
+        } else {
         // Persist for convenience
         setStored('cityu_turn_host', host);
         setStored('cityu_turn_user', username);
@@ -99,12 +103,14 @@ function start() {
             username,
             credential
         });
+        }
     }
 
     if (iceServers.length > 0) {
         config.iceServers = iceServers;
     }
 
+    console.log('[WebRTC] RTCPeerConnection config:', config);
     pc = new RTCPeerConnection(config);
 
     // connect audio / video
