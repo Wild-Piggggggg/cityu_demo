@@ -145,6 +145,11 @@ async def offer(request):
     params = await request.json()
     offer = RTCSessionDescription(sdp=params["sdp"], type=params["type"])
 
+    # 【Zegao】清理已关闭/失败的连接，避免 session 泄漏导致“reach max session”
+    for _pc in list(pcs):
+        if getattr(_pc, "connectionState", None) in ("closed", "failed"):
+            pcs.discard(_pc)
+
     if len(nerfreals) >= opt.max_session:
         print('reach max session')
         return web.Response(
@@ -152,7 +157,10 @@ async def offer(request):
             content_type="application/json",
             text=json.dumps({"code": 1, "msg": "reach max session"}),
         )
-    sessionid = 0 #randN(6)   len(nerfreals)
+    # 【Zegao】分配一个未占用的 sessionid（之前固定为 0，重连会导致一直满）
+    sessionid = 0
+    while sessionid in nerfreals:
+        sessionid += 1
     print('sessionid=',sessionid)
     nerfreals[sessionid] = None
     nerfreal = await asyncio.get_event_loop().run_in_executor(None, build_nerfreal,sessionid)
@@ -200,7 +208,7 @@ async def human(request):
     print("---------进入human")
     params = await request.json()
 
-    sessionid = 0 #params.get('sessionid',0)
+    sessionid = int(params.get('sessionid',0))
     if params.get('interrupt'):
         nerfreals[sessionid].flush_talk()
 
