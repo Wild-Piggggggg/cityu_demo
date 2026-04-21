@@ -85,6 +85,10 @@ function start() {
         const host = (getEl('turn-host') && getEl('turn-host').value.trim())
             ? getEl('turn-host').value.trim()
             : window.location.hostname;
+        const portRaw = (getEl('turn-port') && getEl('turn-port').value.trim())
+            ? getEl('turn-port').value.trim()
+            : '443';
+        const port = String(parseInt(portRaw, 10) || 443);
         const username = (getEl('turn-user') && getEl('turn-user').value.trim()) ? getEl('turn-user').value.trim() : '';
         const credential = (getEl('turn-pass') && getEl('turn-pass').value.trim()) ? getEl('turn-pass').value.trim() : '';
 
@@ -94,12 +98,13 @@ function start() {
         } else {
         // Persist for convenience
         setStored('cityu_turn_host', host);
+        setStored('cityu_turn_port', port);
         setStored('cityu_turn_user', username);
         setStored('cityu_turn_pass', credential);
 
-        // TURN over TLS(TCP 443): most firewall-friendly on campus networks
+        // TURN over TLS (TURNs): best effort. If 443 is blocked externally, use SSH local port forwarding and set host=127.0.0.1, port=<forwarded>.
         iceServers.push({
-            urls: [`turns:${host}:443?transport=tcp`],
+            urls: [`turns:${host}:${port}?transport=tcp`],
             username,
             credential
         });
@@ -172,9 +177,11 @@ window.onbeforeunload = function (e) {
 // 【Zegao】Initialize TURN fields from localStorage (if present)
 window.addEventListener('DOMContentLoaded', () => {
     const hostEl = getEl('turn-host');
+    const portEl = getEl('turn-port');
     const userEl = getEl('turn-user');
     const passEl = getEl('turn-pass');
     if (hostEl) hostEl.value = getStoredOrDefault('cityu_turn_host', '');
+    if (portEl) portEl.value = getStoredOrDefault('cityu_turn_port', '443');
     if (userEl) userEl.value = getStoredOrDefault('cityu_turn_user', '');
     if (passEl) passEl.value = getStoredOrDefault('cityu_turn_pass', '');
 });
