@@ -416,6 +416,28 @@
                     </div>
 
                     <div class="option">
+                        <span class="switch">
+                            <input id="use-turn" type="checkbox" />
+                            <label for="use-turn">Use TURN (TCP 443)</label>
+                        </span>
+                    </div>
+
+                    <div class="option">
+                        <label for="turn-host">TURN Host</label>
+                        <input type="text" id="turn-host" placeholder="e.g. cs659a.cs.cityu.edu.hk or 144.214.210.31" />
+                    </div>
+
+                    <div class="option">
+                        <label for="turn-user">TURN Username</label>
+                        <input type="text" id="turn-user" placeholder="e.g. webrtc" />
+                    </div>
+
+                    <div class="option">
+                        <label for="turn-pass">TURN Password</label>
+                        <input type="text" id="turn-pass" placeholder="e.g. change-me" />
+                    </div>
+
+                    <div class="option">
                         <label for="sessionid">Session ID</label>
                         <input type="text" id="sessionid" value="0" readonly inputmode="numeric" aria-readonly="true" />
                     </div>

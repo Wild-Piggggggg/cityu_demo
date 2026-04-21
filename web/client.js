@@ -1,5 +1,22 @@
 var pc = null;
 
+function getEl(id) {
+    return document.getElementById(id);
+}
+
+function getStoredOrDefault(key, fallback) {
+    try {
+        const v = localStorage.getItem(key);
+        return (v === null || v === undefined || v === '') ? fallback : v;
+    } catch (e) {
+        return fallback;
+    }
+}
+
+function setStored(key, value) {
+    try { localStorage.setItem(key, value); } catch (e) {}
+}
+
 function negotiate() {
     pc.addTransceiver('video', { direction: 'recvonly' });
     pc.addTransceiver('audio', { direction: 'recvonly' });
@@ -47,8 +64,34 @@ function start() {
         sdpSemantics: 'unified-plan'
     };
 
-    if (document.getElementById('use-stun').checked) {
-        config.iceServers = [{ urls: ['stun:stun.l.google.com:19302'] }];
+    // 【Zegao】ICE servers: STUN (optional) + TURN (recommended for remote/campus networks)
+    const iceServers = [];
+    if (getEl('use-stun') && getEl('use-stun').checked) {
+        iceServers.push({ urls: ['stun:stun.l.google.com:19302'] });
+    }
+
+    if (getEl('use-turn') && getEl('use-turn').checked) {
+        const host = (getEl('turn-host') && getEl('turn-host').value.trim())
+            ? getEl('turn-host').value.trim()
+            : window.location.hostname;
+        const username = (getEl('turn-user') && getEl('turn-user').value.trim()) ? getEl('turn-user').value.trim() : '';
+        const credential = (getEl('turn-pass') && getEl('turn-pass').value.trim()) ? getEl('turn-pass').value.trim() : '';
+
+        // Persist for convenience
+        setStored('cityu_turn_host', host);
+        setStored('cityu_turn_user', username);
+        setStored('cityu_turn_pass', credential);
+
+        // TURN over TCP 443: most firewall-friendly
+        iceServers.push({
+            urls: [`turn:${host}:443?transport=tcp`],
+            username,
+            credential
+        });
+    }
+
+    if (iceServers.length > 0) {
+        config.iceServers = iceServers;
     }
 
     pc = new RTCPeerConnection(config);
@@ -108,3 +151,13 @@ window.onbeforeunload = function (e) {
         // Chrome, Safari, Firefox 4+, Opera 12+ , IE 9+
         return '关闭提示'
       }
+
+// 【Zegao】Initialize TURN fields from localStorage (if present)
+window.addEventListener('DOMContentLoaded', () => {
+    const hostEl = getEl('turn-host');
+    const userEl = getEl('turn-user');
+    const passEl = getEl('turn-pass');
+    if (hostEl) hostEl.value = getStoredOrDefault('cityu_turn_host', '');
+    if (userEl) userEl.value = getStoredOrDefault('cityu_turn_user', '');
+    if (passEl) passEl.value = getStoredOrDefault('cityu_turn_pass', '');
+});
