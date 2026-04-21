@@ -49,9 +49,20 @@ function negotiate() {
             },
             method: 'POST'
         });
-    }).then((response) => {
-        return response.json();
+    }).then(async (response) => {
+        const raw = await response.text();
+        if (!response.ok) {
+            throw new Error(`/offer failed (${response.status}): ${raw.slice(0, 400)}`);
+        }
+        try {
+            return JSON.parse(raw);
+        } catch (e) {
+            throw new Error(`/offer returned non-JSON: ${raw.slice(0, 400)}`);
+        }
     }).then((answer) => {
+        if (answer && answer.code && answer.code !== 0) {
+            throw new Error(answer.msg || 'offer error');
+        }
         document.getElementById('sessionid').value = answer.sessionid
         return pc.setRemoteDescription(answer);
     }).catch((e) => {
