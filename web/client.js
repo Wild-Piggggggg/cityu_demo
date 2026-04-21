@@ -93,9 +93,9 @@ function start() {
         setStored('cityu_turn_user', username);
         setStored('cityu_turn_pass', credential);
 
-        // TURN over TCP 443: most firewall-friendly
+        // TURN over TLS(TCP 443): most firewall-friendly on campus networks
         iceServers.push({
-            urls: [`turn:${host}:443?transport=tcp`],
+            urls: [`turns:${host}:443?transport=tcp`],
             username,
             credential
         });
